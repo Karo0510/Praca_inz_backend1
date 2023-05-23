@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,34 +21,7 @@ public class RiskAssessment {
     @Column(name="id", nullable = false)
     private long id;
 
-    @Column(name="dangerous", nullable = false)
-    private String dangerous = "";
-
-    @Column(name="cause_of_dangerous", nullable = false)
-    private String causeOfDangerous = "";
-
-    @Column(name="probability", nullable = false)
-    private Integer probability;
-
-    @Column(name="rank_of_effects", nullable = false)
-    private Integer rank;
-
-    @Column(name="risk", nullable = false)
-    private Integer risk;
-
-    @Column(name="preventive_actions", nullable = true)
-    private String actions;
-
-    @Column(name="probability_after_preventive_actions", nullable = false)
-    private Integer probabilityAfterPreventiveActions;
-
-    @Column(name="rank_of_effects_after_preventive_actions", nullable = false)
-    private Integer rankAfterPreventiveActions;
-
-    @Column(name="risk_after_preventive_actions", nullable = false)
-    private Integer riskAfterPreventiveActions;
-
-    @Column(name="last_update_date", nullable = false)
+    @Column(name="last_update_date", nullable = false) //XXX: change to create_date
     private LocalDate date;
 
     @Column(name="nr_of_department", nullable = true)
@@ -56,6 +30,9 @@ public class RiskAssessment {
     @ManyToOne
     @JoinColumn(name = "job_position_id")
     private JobPosition jobPosition;
+
+    @OneToMany(mappedBy = "riskAssessment")
+    List<HazardFactors> factors;
 
 
 }
