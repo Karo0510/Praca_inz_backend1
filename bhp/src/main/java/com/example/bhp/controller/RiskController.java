@@ -1,7 +1,7 @@
 package com.example.bhp.controller;
 
 
-import com.example.bhp.entity.OccupationalRiskAssesment;
+import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.repository.RiskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +17,12 @@ public class RiskController {
     private RiskRepository register;
 
     @GetMapping("/risk")
-    public List<OccupationalRiskAssesment> fetchEmployees() {
+    public List<RiskAssessment> fetchEmployees() {
         return register.findAll();
     }
 
     @PostMapping("/risk")
-    public OccupationalRiskAssesment addRisk(@RequestBody OccupationalRiskAssesment reg) {
+    public RiskAssessment addRisk(@RequestBody RiskAssessment reg) {
         return register.save(reg);
     }
 

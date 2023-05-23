@@ -1,8 +1,8 @@
 package com.example.bhp.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,7 +33,7 @@ public class JobPosition {
     @Column(name="isMentalStress", nullable = false)
     private boolean isMentalStress = false;
 
-    @OneToOne(mappedBy = "job_position")
-    private OccupationalRiskAssesment riskAssesment;
+    @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
+    private List<RiskAssessment> riskAssessments;
 
 }

@@ -11,17 +11,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "risk")
+@Table(name = "risk_assessment")
 
-public class OccupationalRiskAssesment {
+public class RiskAssessment {
     //XXX: zrobic historyczna wersje oceny ryzyka -> relacja ze stanowiskiem: OneToMany
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false)
     private long id;
-
-    @OneToOne
-    private JobPosition job_position;
 
     @Column(name="dangerous", nullable = false)
     private String dangerous = "";
@@ -56,7 +53,9 @@ public class OccupationalRiskAssesment {
     @Column(name="nr_of_department", nullable = true)
     private Integer nrOfDepartment;
 
-
+    @ManyToOne
+    @JoinColumn(name = "job_position_id")
+    private JobPosition jobPosition;
 
 
 }
