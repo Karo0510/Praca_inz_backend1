@@ -2,6 +2,7 @@ package com.example.bhp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 
 import java.io.Serializable;
@@ -27,19 +28,23 @@ import java.util.Set;
 @Table(name = "employees")
 public class Employees implements Serializable {
 
+    //XXX: dodac do klasy pesel, data konca pracy, oraz data wpisu
+
     @ManyToMany(fetch = FetchType.EAGER)
+    @Builder.Default
     @JoinTable(name = "EmployeesPeriodicTrainings",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "training_id")
     )
-    private List<TrainingRegister> periodic_training_register;
+    private List<TrainingRegister> periodic_training_register = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Builder.Default
     @JoinTable(name = "EmployeesAccident",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "accident_id")
     )
-    private List<RegistryOfAccidents> register_of_accidents;
+    private List<RegistryOfAccidents> register_of_accidents = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +68,10 @@ public class Employees implements Serializable {
 
     @Column(name="nr_of_department", nullable = true)
     private Integer nrOfDepartment;
+
+    @ManyToOne//(cascade = CascadeType.ALL)
+    @JoinColumn(name = "job_id", nullable = false)
+    private JobPosition jobPosition;
 
 
 }

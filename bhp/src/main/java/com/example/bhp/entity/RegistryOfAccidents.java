@@ -1,11 +1,13 @@
 package com.example.bhp.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
 
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 //lombok - biblioteka wytwarzajaca ukryte gettery, settery, buildery, konstruktory
@@ -16,6 +18,7 @@ import java.util.List;
 
 //znac metody http
 
+@Transactional
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,7 +29,7 @@ import java.util.List;
 
 public class RegistryOfAccidents implements Serializable {
 
-    enum Accident_priority {
+    public enum Accident_priority {
         LIGHT,
         HEAVY,
         FATAL,
@@ -59,10 +62,15 @@ public class RegistryOfAccidents implements Serializable {
     @Column(name="is_recognized_as_accident", nullable = false)
     private boolean isAccident = false;
 
-    @ManyToMany(mappedBy = "register_of_accidents", fetch = FetchType.EAGER)
-    private List<Employees> employees;
+    @Builder.Default
+    @ManyToMany(mappedBy = "register_of_accidents")
+    private List<Employees> employees = new ArrayList<>();
 
     @Column(name="responsible_branch", nullable = true)
     private Integer responsibleBranch;
 
+    public void addEmployee(Employees emp) {
+        employees.add(emp);
+        emp.getRegister_of_accidents().add(this);
+    }
 }

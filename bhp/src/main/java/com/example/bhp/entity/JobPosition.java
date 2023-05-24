@@ -36,4 +36,7 @@ public class JobPosition {
     @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
     private List<RiskAssessment> riskAssessments;
 
+    @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
+    private List<Employees> employees;
+
 }
