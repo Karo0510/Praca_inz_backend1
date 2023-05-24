@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 //lombok - biblioteka wytwarzajaca ukryte gettery, settery, buildery, konstruktory
@@ -27,19 +28,14 @@ public class TrainingRegister implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long training_id;
 
-    @Column(name="employee_id", nullable = false)
-    private long employeeId;
-
-    @Column(name="training_start_date", nullable = false) //szkolenie wstepne
-    public LocalDate startDate;
-
     @Column(name="periodic_training_date", nullable = true) //data ostatniego szkolenia okresowego
-    private LocalDate lastDate;
+    private LocalDate first_date;
 
     @Column(name="periodic_training_exam_date", nullable = true) //data egzaminu szkolenia okresowego
     private LocalDate date_exam;
 
+    @Builder.Default
     @ManyToMany(mappedBy = "periodic_training_register", fetch = FetchType.EAGER)
-    private List<Employees> employees;
+    private List<Employees> employees = new ArrayList<>();
 
 }

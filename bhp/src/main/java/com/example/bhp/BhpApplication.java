@@ -167,6 +167,28 @@ public class BhpApplication implements CommandLineRunner
 		employeeRepository.save(employee2);
 		employeeRepository.save(employee3);
 
+		TrainingRegister t1 = TrainingRegister.builder()
+				.first_date(LocalDate.of(2022, 01, 01))
+				.date_exam(LocalDate.of(2022, 01, 05))
+				.build();
+
+		TrainingRegister t2  = TrainingRegister.builder()
+				.first_date(LocalDate.of(2023, 02, 02))
+				.date_exam(LocalDate.of(2023, 01, 05))
+				.build();
+
+
+		t1.getEmployees().add(employee1);
+		t1.getEmployees().add(employee2);
+		employee1.getPeriodic_training_register().add(t1);
+		employee2.getPeriodic_training_register().add(t1);
+
+		trainingRepository.save(t1);
+		employeeRepository.save(employee1);
+		employeeRepository.save(employee2);
+
+
+
 
 
 	}

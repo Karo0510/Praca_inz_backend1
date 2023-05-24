@@ -36,11 +36,11 @@ public class RegistryOfAccidents implements Serializable {
         COLLECTIVE
     }
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", nullable = false)
     private long id;
 
+    @Id
     @Column(name="accident_id", nullable = false, unique = true)
     private long accident_id;
 
