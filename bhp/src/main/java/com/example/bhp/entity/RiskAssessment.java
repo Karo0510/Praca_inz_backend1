@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -32,7 +33,8 @@ public class RiskAssessment {
     private JobPosition jobPosition;
 
     @OneToMany(mappedBy = "riskAssessment")
-    List<HazardFactors> factors;
+    @Builder.Default
+    List<HazardFactors> factors = new ArrayList<>();
 
 
 }

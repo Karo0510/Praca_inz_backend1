@@ -1,11 +1,18 @@
 package com.example.bhp.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "hazard_factors")
+@NoArgsConstructor
+@AllArgsConstructor
 public class HazardFactors {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -27,16 +34,16 @@ public class HazardFactors {
     @Column(name="preventive_actions", nullable = true)
     private String actions;
 
-    @Column(name="probability_after_preventive_actions", nullable = false)
-    private Integer probabilityAfterPreventiveActions;
+    @Column(name="probability_after_preventive_actions", nullable = true)
+    private Double probabilityAfterPreventiveActions;
 
-    @Column(name="rank_of_effects_after_preventive_actions", nullable = false)
-    private Integer rankAfterPreventiveActions;
+    @Column(name="rank_of_effects_after_preventive_actions", nullable = true)
+    private Double rankAfterPreventiveActions;
 
-    @Column(name="risk_after_preventive_actions", nullable = false)
-    private Integer riskAfterPreventiveActions;
+    @Column(name="risk_after_preventive_actions", nullable = true)
+    private Double riskAfterPreventiveActions;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "risk_assessment_id")
     private RiskAssessment riskAssessment;
 

@@ -1,7 +1,9 @@
 package com.example.bhp.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -21,22 +23,29 @@ public class JobPosition {
     @Column(name="job_position_name", nullable = false, unique = true)
     private String name;
 
-    @Column(name="isChemicalRisk", nullable = false)
+    @Column(name="is_chemical_risk", nullable = false)
     private boolean isChemicalRisk = false;
 
-    @Column(name="isBiologicalRisk", nullable = false)
+    @Column(name="is_biological_risk", nullable = false)
     private boolean isBiologicalRisk = false;
 
-    @Column(name="isPhysicalRisk", nullable = false)
+    @Column(name="is_physical_risk", nullable = false)
     private boolean isPsysicalRisk = false;
 
-    @Column(name="isMentalStress", nullable = false)
+    @Column(name="is_mental_stress", nullable = false)
     private boolean isMentalStress = false;
 
+    @Builder.Default
+    @JsonBackReference(value = "**")
     @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
-    private List<RiskAssessment> riskAssessments;
+    private List<RiskAssessment> riskAssessments = new ArrayList<>();
 
+    @Builder.Default
+    @JsonBackReference(value = "**")
     @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
-    private List<Employees> employees;
+    private List<Employees> employees = new ArrayList<>();
+
+
+
 
 }

@@ -1,16 +1,12 @@
 package com.example.bhp;
 
-import com.example.bhp.entity.Employees;
-import com.example.bhp.entity.JobPosition;
-import com.example.bhp.entity.RegistryOfAccidents;
-import com.example.bhp.entity.TrainingRegister;
+import com.example.bhp.entity.*;
 import com.example.bhp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -29,7 +25,7 @@ public class BhpApplication implements CommandLineRunner
 	RegisterOfAccidentsRepository registerOfAccidentsRepository;
 
 	@Autowired
-	RiskRepository riskRepository;
+	RiskAssessmentRepository riskRepository;
 
 	@Autowired
 	TrainingRepository trainingRepository;
@@ -46,7 +42,7 @@ public class BhpApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception {
 
-		JobPosition jobPosition1 = JobPosition.builder()
+		/*JobPosition jobPosition1 = JobPosition.builder()
 				.name("C++ Developer")
 				.isMentalStress(true)
 				.build();
@@ -188,7 +184,76 @@ public class BhpApplication implements CommandLineRunner
 		employeeRepository.save(employee2);
 
 
+		RiskAssessment r1 = RiskAssessment.builder()
+				.date(LocalDate.now())
+				.nrOfDepartment(9)
+				.build();
 
+
+		RiskAssessment r2 = RiskAssessment.builder()
+				.date(LocalDate.of(2020, 05, 24))
+				.nrOfDepartment(9)
+				.build();
+
+		jobPosition1.getRiskAssessments().add(r1);
+		r1.setJobPosition(jobPosition1);
+
+		jobPosition1.getRiskAssessments().add(r2);
+		r2.setJobPosition(jobPosition1);
+
+		jobRepository.save(jobPosition1);
+		riskRepository.save(r1);
+		riskRepository.save(r2);
+
+		HazardFactors h1 = HazardFactors.builder()
+				.hazard("Oparzenie 2 stopnia")
+				.causeOfHazard("Noszenie goracego kubka z herbata")
+				.probability(2.0)
+				.rank(2.0)
+				.risk(2.0)
+				.build();
+
+		HazardFactors h2 = HazardFactors.builder()
+				.hazard("Porazenie pradem")
+				.causeOfHazard("Uszkodzenie przewodow")
+				.probability(2.0)
+				.rank(3.0)
+				.risk(3.0)
+				.actions("Zwracanie uwagi na stan sprzetu. Zglaszanie incydentow do przelozonego")
+				.probabilityAfterPreventiveActions(1.0)
+				.rankAfterPreventiveActions(3.0)
+				.probabilityAfterPreventiveActions(2.0)
+				.build();
+
+		HazardFactors h3 = HazardFactors.builder()
+				.hazard("Kopniecie kolegi")
+				.causeOfHazard("Wkurzenie kolegi")
+				.probability(1.0)
+				.rank(1.0)
+				.risk(1.0)
+				.build();
+
+		r1.getFactors().add(h1);
+		h1.setRiskAssessment(r1);
+
+		r1.getFactors().add(h2);
+		h2.setRiskAssessment(r1);
+
+		r2.getFactors().add(h1);
+		h1.setRiskAssessment(r2);
+
+		r2.getFactors().add(h2);
+		h2.setRiskAssessment(r2);
+
+		r2.getFactors().add(h3);
+		h3.setRiskAssessment(r2);
+
+		repository.save(h1);
+		repository.save(h2);
+		repository.save(h3);
+
+		riskRepository.save(r1);
+		riskRepository.save(r2);*/
 
 
 	}

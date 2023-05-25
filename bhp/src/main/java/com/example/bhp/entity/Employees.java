@@ -1,9 +1,12 @@
 package com.example.bhp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -24,15 +27,17 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SpringBootApplication
 @Entity
 @Table(name = "employees")
-public class Employees implements Serializable {
+public class Employees implements Serializable{
 
     //XXX: dodac do klasy pesel, data konca pracy, oraz data wpisu
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    @JoinTable(name = "EmployeesPeriodicTrainings",
+    @JsonBackReference(value = "**")
+    @JoinTable(name = "employees_periodic_trainings",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "training_id")
     )
@@ -40,7 +45,8 @@ public class Employees implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    @JoinTable(name = "EmployeesAccident",
+    @JsonBackReference(value = "**")
+    @JoinTable(name = "employees_accident",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "accident_id")
     )
@@ -71,6 +77,7 @@ public class Employees implements Serializable {
 
     @ManyToOne//(cascade = CascadeType.ALL)
     @JoinColumn(name = "job_id", nullable = false)
+    @JsonBackReference(value = "**")
     private JobPosition jobPosition;
 
 
