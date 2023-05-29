@@ -76,25 +76,13 @@ public class EmployeeController
     @GetMapping("/employees")
     public List<EmployeeInfo> fetchEmployees()
     {
-        List<EmployeeInfo> ans = new ArrayList<>();
+        return EmployeeInfo.getEmployees();
+    }
 
-        Session session = DBConnection.getSession();
-        //SELECT e, j.job_position_name FROM Employees e LEFT JOIN e.jobPosition j WHERE e.nrOfDepartment = 9"
-
-        try
-        {
-            Query<Object[]> list = session.createQuery(
-                    "SELECT e, j.name FROM Employees e, JobPosition j WHERE e.jobPosition = j", Object[].class);
-
-            for (Object[] entry: list.list()) {
-                ans.add(new EmployeeInfo().setData((Employees) entry[0], (String)entry[1]));
-            }
-
-            return ans;
-
-        }finally{
-            session.close();
-        }
+    @GetMapping("/employees/$department={id}")
+    public List<EmployeeInfo> fetchEmployees(@PathVariable(value="id") Long number)
+    {
+        return EmployeeInfo.getEmployees(number);
     }
 
     /*@GetMapping("/employees")

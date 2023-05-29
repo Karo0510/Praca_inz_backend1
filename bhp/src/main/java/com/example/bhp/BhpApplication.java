@@ -159,9 +159,9 @@ public class BhpApplication implements CommandLineRunner
 		registerOfAccidentsRepository.save(accident);
 		registerOfAccidentsRepository.save(accident2);
 
-		employeeRepository.save(employee1);
-		employeeRepository.save(employee2);
-		employeeRepository.save(employee3);
+		//employeeRepository.save(employee1);
+		//employeeRepository.save(employee2);
+		//employeeRepository.save(employee3);
 
 		TrainingRegister t1 = TrainingRegister.builder()
 				.first_date(LocalDate.of(2022, 01, 01))
@@ -182,6 +182,7 @@ public class BhpApplication implements CommandLineRunner
 		trainingRepository.save(t1);
 		employeeRepository.save(employee1);
 		employeeRepository.save(employee2);
+		employeeRepository.save(employee3);
 
 
 		RiskAssessment r1 = RiskAssessment.builder()

@@ -30,6 +30,12 @@ import java.util.Set;
 @SpringBootApplication
 @Entity
 @Table(name = "employees")
+@NamedQueries(
+        {
+                @NamedQuery(name="get_all_employees", query = "SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j"),
+                @NamedQuery(name="get_all_employees_by_department", query="SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j WHERE e.nrOfDepartment = :id")
+        }
+)
 public class Employees implements Serializable{
 
     //XXX: dodac do klasy pesel, data konca pracy, oraz data wpisu
