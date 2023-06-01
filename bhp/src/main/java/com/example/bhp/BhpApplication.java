@@ -42,7 +42,7 @@ public class BhpApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception {
 
-		/*JobPosition jobPosition1 = JobPosition.builder()
+		JobPosition jobPosition1 = JobPosition.builder()
 				.name("C++ Developer")
 				.isMentalStress(true)
 				.build();
@@ -111,24 +111,24 @@ public class BhpApplication implements CommandLineRunner
 		employeeRepository.save(employee4);
 
 		RegistryOfAccidents accident = RegistryOfAccidents.builder()
-				.accident_id(12023)
+				.key(new RegistryKey(12023, 9))
 				.date(LocalDate.of(2023,02, 02))
 				.isAccident(true)
 				.number(2)
 				.employees(new ArrayList<>())
-				.responsibleBranch(9)
+				//.responsibleBranch(9)
 				.protocole("01-2023")
 				.place("biuro")
 				.type(RegistryOfAccidents.Accident_priority.COLLECTIVE)
 				.build();
 
 		RegistryOfAccidents accident2 = RegistryOfAccidents.builder()
-				.accident_id(22023)
+				.key(new RegistryKey(22023, 4))
 				.date(LocalDate.of(2023,05, 02))
 				.isAccident(true)
 				.place("Hogwart")
 				.employees(new ArrayList<>())
-				.responsibleBranch(4)
+				//.responsibleBranch(4)
 				.protocole("02-2023")
 				.type(RegistryOfAccidents.Accident_priority.FATAL)
 				.number(1)
@@ -254,7 +254,7 @@ public class BhpApplication implements CommandLineRunner
 		repository.save(h3);
 
 		riskRepository.save(r1);
-		riskRepository.save(r2);*/
+		riskRepository.save(r2);
 
 
 	}

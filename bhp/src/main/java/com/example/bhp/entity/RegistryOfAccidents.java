@@ -36,13 +36,16 @@ public class RegistryOfAccidents implements Serializable {
         COLLECTIVE
     }
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false)
-    private long id;
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(name="id", nullable = false)
+    //private long id;
 
-    @Id
-    @Column(name="accident_id", nullable = false, unique = true)
-    private long accident_id;
+    @EmbeddedId
+    RegistryKey key;
+
+
+    //@Column(name="accident_id", nullable = false, unique = true)
+    //private Long accident_id;
 
     @Column(name="date_of_accidents", nullable = false)
     private LocalDate date = LocalDate.of(2022, 1, 1);
@@ -66,8 +69,8 @@ public class RegistryOfAccidents implements Serializable {
     @ManyToMany(mappedBy = "register_of_accidents")
     private List<Employees> employees = new ArrayList<>();
 
-    @Column(name="responsible_branch", nullable = true)
-    private Integer responsibleBranch;
+    //@Column(name="responsible_branch", nullable = true)
+    //private Integer responsibleBranch;
 
     public void addEmployee(Employees emp) {
         employees.add(emp);

@@ -54,7 +54,10 @@ public class Employees implements Serializable{
     @JsonBackReference(value = "**")
     @JoinTable(name = "employees_accident",
             joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name = "accident_id")
+            inverseJoinColumns = {
+            @JoinColumn(name = "accident_id"), @JoinColumn(name="responsible_branch")
+            },
+            uniqueConstraints = @UniqueConstraint(columnNames = {"employee_id", "accident_id", "responsible_branch"})
     )
     private List<RegistryOfAccidents> register_of_accidents = new ArrayList<>();
 
