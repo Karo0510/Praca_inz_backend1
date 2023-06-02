@@ -22,7 +22,7 @@ public class RegistryKey implements Serializable
 {
     private static final long serialVersionUID = -6792570972318700239L;
     @Column(name="accident_id", nullable = false)
-    private long accident_id;
+    private long accidentId;
 
     @Column(name="responsible_branch", nullable = true)
     private Integer responsibleBranch;
