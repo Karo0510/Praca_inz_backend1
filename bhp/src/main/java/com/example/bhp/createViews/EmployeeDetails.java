@@ -13,8 +13,8 @@ import java.util.List;
 
 public class EmployeeDetails extends EmployeeBasics implements Serializable
 {
-    List<RegistryKey> numberOfProtocole = new ArrayList<>();
-    List<LocalDate> firstDayPeriodicDate = new ArrayList<>();
+    public List<RegistryKey> numberOfProtocole = new ArrayList<>();
+    public List<LocalDate> firstDayPeriodicDate = new ArrayList<>();
 
     public EmployeeDetails()
     {
@@ -33,7 +33,7 @@ public class EmployeeDetails extends EmployeeBasics implements Serializable
 
         for (RegistryOfAccidents ra: emp.getAccidents())
         {
-            System.out.println(ra.getProtocole());
+            System.out.println();
             this.numberOfProtocole.add(ra.getKey());
         }
 
