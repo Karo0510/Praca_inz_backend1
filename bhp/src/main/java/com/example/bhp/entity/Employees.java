@@ -33,7 +33,8 @@ import java.util.Set;
 @NamedQueries(
         {
                 @NamedQuery(name="get_all_employees", query = "SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j"),
-                @NamedQuery(name="get_all_employees_by_department", query="SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j WHERE e.nrOfDepartment = :id")
+                @NamedQuery(name="get_all_employees_by_department", query="SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j WHERE e.nrOfDepartment = :id"),
+                @NamedQuery(name="get_employee_by_id", query="SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j WHERE e.id = :id")
         }
 )
 public class Employees implements Serializable{

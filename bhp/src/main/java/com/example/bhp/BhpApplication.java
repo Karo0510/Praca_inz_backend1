@@ -42,7 +42,7 @@ public class BhpApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception {
 
-		JobPosition jobPosition1 = JobPosition.builder()
+		/*JobPosition jobPosition1 = JobPosition.builder()
 				.name("C++ Developer")
 				.isMentalStress(true)
 				.build();
@@ -257,7 +257,7 @@ public class BhpApplication implements CommandLineRunner
 
 		//riskRepository.save(r1);
 		//riskRepository.save(r2);
-
+*/
 
 	}
 }

@@ -1,21 +1,17 @@
 package com.example.bhp.controller;
 
+import com.example.bhp.createViews.EmployeeBasics;
 import com.example.bhp.createViews.EmployeeDetails;
-import com.example.bhp.createViews.EmployeeInfo;
-import com.example.bhp.data_initializer.DBConnection;
+import com.example.bhp.dao.EmployeeInfo;
 import com.example.bhp.entity.Employees;
 import com.example.bhp.repository.EmployeeRepository;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.TypedQuery;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 //autowired - sam stworzy obiekt serwisu w tym kontrolerze
@@ -44,8 +40,16 @@ public class EmployeeController
         return ResponseEntity.ok("Odpowiedź z serwera");
     }
 
-    //@GetMapping("/employees/$id={id}/detail")
     @GetMapping("/employees/$id={id}/detail")
+    public EmployeeDetails detailsEmployee(@PathVariable(value="id")Long id)
+    {
+        EmployeeDetails details = new EmployeeDetails().setData(EmployeeInfo.getEmployeeById(id));
+
+        return details;
+    }
+
+    //@GetMapping("/employees/$id={id}/detail")
+    /*@GetMapping("/employees/$id={id}/detail")
     public Employees detailsEmployee(@PathVariable(value="id")Long id)
     {
         Employees e = new Employees();
@@ -58,7 +62,7 @@ public class EmployeeController
         }
 
         return e;
-    }
+    }*/
 
     /*@GetMapping("/employees/{offset}/{size}")
     public List<Employees> fetchEmployees(@PathVariable(value="offset") Integer offset, @PathVariable(value="size") Integer size)
@@ -74,15 +78,41 @@ public class EmployeeController
 
 
     @GetMapping("/employees")
-    public List<EmployeeInfo> fetchEmployees()
+    public List<EmployeeBasics> fetchEmployees()
     {
-        return EmployeeInfo.getEmployees();
+        List<EmployeeBasics> emp = new ArrayList<>();
+
+        List<EmployeeInfo> info = EmployeeInfo.getEmployeesAllData(null);
+
+        for (EmployeeInfo i: info)
+        {
+            EmployeeBasics e = new EmployeeBasics();
+            System.out.println(i.getEmployee().getLastName());
+
+            e = e.setData(i);
+            emp.add(e);
+        }
+
+        return emp;
     }
 
     @GetMapping("/employees/$department={id}")
-    public List<EmployeeInfo> fetchEmployees(@PathVariable(value="id") Long number)
+    public List<EmployeeBasics> fetchEmployees(@PathVariable(value="id") Long number)
     {
-        return EmployeeInfo.getEmployees(number);
+        List<EmployeeBasics> emp = new ArrayList<>();
+
+        List<EmployeeInfo> info = EmployeeInfo.getEmployeesAllData(number);
+
+        for (EmployeeInfo i: info)
+        {
+            EmployeeBasics e = new EmployeeBasics();
+            System.out.println(i.getEmployee().getLastName());
+
+            e = e.setData(i);
+            emp.add(e);
+        }
+
+        return emp;
     }
 
     /*@GetMapping("/employees")
