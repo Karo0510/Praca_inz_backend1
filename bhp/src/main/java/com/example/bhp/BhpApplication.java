@@ -202,9 +202,8 @@ public class BhpApplication implements CommandLineRunner
 		jobPosition1.getRiskAssessments().add(r2);
 		r2.setJobPosition(jobPosition1);
 
-		jobRepository.save(jobPosition1);
-		riskRepository.save(r1);
-		riskRepository.save(r2);
+		//jobRepository.save(jobPosition1);
+
 
 		HazardFactors h1 = HazardFactors.builder()
 				.hazard("Oparzenie 2 stopnia")
@@ -249,12 +248,15 @@ public class BhpApplication implements CommandLineRunner
 		r2.getFactors().add(h3);
 		h3.setRiskAssessment(r2);
 
+		riskRepository.save(r1);
+		riskRepository.save(r2);
+
 		repository.save(h1);
 		repository.save(h2);
 		repository.save(h3);
 
-		riskRepository.save(r1);
-		riskRepository.save(r2);
+		//riskRepository.save(r1);
+		//riskRepository.save(r2);
 
 
 	}
