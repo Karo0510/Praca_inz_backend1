@@ -22,6 +22,15 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "periodic_training_register")
+@NamedQueries(
+        {
+                @NamedQuery(name="trainings", query="Select t from TrainingRegister t")
+        }
+)
+
+
+
+
 
 public class TrainingRegister implements Serializable {
     @Id
