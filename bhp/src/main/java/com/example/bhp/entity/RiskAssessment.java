@@ -1,7 +1,10 @@
 package com.example.bhp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +17,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "risk_assessment")
-
 public class RiskAssessment {
     //XXX: zrobic historyczna wersje oceny ryzyka -> relacja ze stanowiskiem: OneToMany
     @Id
@@ -32,8 +34,10 @@ public class RiskAssessment {
     @JoinColumn(name = "job_position_id")
     private JobPosition jobPosition;
 
-    @OneToMany(mappedBy = "riskAssessment")
+
+    @OneToMany(mappedBy = "riskAssessment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
+    @JsonBackReference(value = "**")
     List<HazardFactors> factors = new ArrayList<>();
 
 

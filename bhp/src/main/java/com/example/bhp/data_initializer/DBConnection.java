@@ -37,7 +37,7 @@ public class DBConnection {
     }
 
     public static Session getSession() {
-        return factory.getCurrentSession();
+        return factory.openSession();
     }
 
     public void doWork() {}

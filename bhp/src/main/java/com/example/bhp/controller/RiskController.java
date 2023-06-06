@@ -1,9 +1,10 @@
 package com.example.bhp.controller;
 
-
+import com.example.bhp.dao.JobInfo;
 import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.repository.RiskAssessmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,13 @@ public class RiskController {
     private RiskAssessmentRepository register;
 
     @GetMapping("/risk")
-    public List<RiskAssessment> fetchEmployees() {
-        return register.findAll();
+    public List<JobInfo> fetchRisk()
+    {
+        List<JobInfo> ans = JobInfo.listRisk();
+
+        System.out.println(ans.isEmpty());
+
+        return ans;
     }
 
     @PostMapping("/risk")

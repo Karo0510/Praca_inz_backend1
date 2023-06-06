@@ -87,8 +87,6 @@ public class EmployeeController
         for (EmployeeInfo i: info)
         {
             EmployeeBasics e = new EmployeeBasics();
-            System.out.println(i.getEmployee().getLastName());
-
             e = e.setData(i);
             emp.add(e);
         }

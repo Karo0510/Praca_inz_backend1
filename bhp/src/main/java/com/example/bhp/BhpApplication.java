@@ -1,7 +1,9 @@
 package com.example.bhp;
 
+import com.example.bhp.data_initializer.DBConnection;
 import com.example.bhp.entity.*;
 import com.example.bhp.repository.*;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -233,11 +235,31 @@ public class BhpApplication implements CommandLineRunner
 				.risk(1.0)
 				.build();
 
-		r1.getFactors().add(h1);
-		h1.setRiskAssessment(r1);
+		HazardFactors h4 = HazardFactors.builder()
+				.hazard("Oparzenie 2 stopnia")
+				.causeOfHazard("Noszenie goracego kubka z herbata")
+				.probability(2.0)
+				.rank(2.0)
+				.risk(2.0)
+				.build();
 
-		r1.getFactors().add(h2);
-		h2.setRiskAssessment(r1);
+		HazardFactors h5 = HazardFactors.builder()
+				.hazard("Porazenie pradem")
+				.causeOfHazard("Uszkodzenie przewodow")
+				.probability(2.0)
+				.rank(3.0)
+				.risk(3.0)
+				.actions("Zwracanie uwagi na stan sprzetu. Zglaszanie incydentow do przelozonego")
+				.probabilityAfterPreventiveActions(1.0)
+				.rankAfterPreventiveActions(3.0)
+				.probabilityAfterPreventiveActions(2.0)
+				.build();
+
+		r1.getFactors().add(h4);
+		h4.setRiskAssessment(r1);
+
+		r1.getFactors().add(h5);
+		h5.setRiskAssessment(r1);
 
 		r2.getFactors().add(h1);
 		h1.setRiskAssessment(r2);
@@ -248,16 +270,22 @@ public class BhpApplication implements CommandLineRunner
 		r2.getFactors().add(h3);
 		h3.setRiskAssessment(r2);
 
-		riskRepository.save(r1);
-		riskRepository.save(r2);
-
-		repository.save(h1);
-		repository.save(h2);
-		repository.save(h3);
-
 		//riskRepository.save(r1);
 		//riskRepository.save(r2);
-*/
+
+		Session session = DBConnection.getSession();
+		session.beginTransaction();
+		session.persist(r1);
+		session.persist(r2);
+		session.flush();
+		session.close();
+
+		//repository.save(h1);
+		//repository.save(h2);
+		//repository.save(h3);
+
+		//riskRepository.save(r1);
+		//riskRepository.save(r2);*/
 
 	}
 }
