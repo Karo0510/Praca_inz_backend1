@@ -30,7 +30,7 @@ public class JobPosition {
     private boolean isBiologicalRisk = false;
 
     @Column(name="is_physical_risk", nullable = false)
-    private boolean isPsysicalRisk = false;
+    private boolean isPhysicalRisk = false;
 
     @Column(name="is_mental_stress", nullable = false)
     private boolean isMentalStress = false;
