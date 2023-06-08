@@ -7,22 +7,21 @@ import com.example.bhp.entity.RiskAssessment;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
 public class RiskInfo
 {
-    RiskAssessment ra;
-    List<HazardFactors> hf = new ArrayList<>();
+    public RiskAssessment ra;
+    public List<HazardFactors> hf = new ArrayList<>();
 
     public List<RiskInfo> downloadData()
     {
         List<RiskInfo> ans = new ArrayList<>();
-
         Session session = DBConnection.getSession();
 
         try
@@ -41,4 +40,23 @@ public class RiskInfo
         }
     }
 
+    public static RiskInfo downloadCurrentRiskByJobId(Long id)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            String hql = "Select ra from RiskAssessment ra\n" +
+                    "where ra.jobPosition.id = :id\n" +
+                    "and ra.date = (Select MAX(ra.date) from RiskAssessment ra)";
+
+            Query<RiskAssessment> ans = session.createQuery(hql, RiskAssessment.class);
+            RiskAssessment a = ans.setParameter("id", id).getSingleResult();
+
+            return new RiskInfo(a, a.getFactors());
+
+        }finally{
+            session.close();
+        }
+    }
 }

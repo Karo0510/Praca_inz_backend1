@@ -48,9 +48,4 @@ public class JobInfo
 
     }
 
-    /*private static JobInfo currentRisk(Long jobId)
-    {
-
-    }*/
-
 }

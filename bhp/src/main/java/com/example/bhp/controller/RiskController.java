@@ -1,6 +1,7 @@
 package com.example.bhp.controller;
 
 import com.example.bhp.dao.JobInfo;
+import com.example.bhp.dao.RiskInfo;
 import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.repository.RiskAssessmentRepository;
@@ -24,6 +25,16 @@ public class RiskController {
         List<JobInfo> ans = JobInfo.listRisk();
 
         System.out.println(ans.isEmpty());
+
+        return ans;
+    }
+
+    @GetMapping("/risk/$job_id={id}")
+    public RiskInfo currentRiskByJobId(@PathVariable(value="id")Long id)
+    {
+        RiskInfo ans = RiskInfo.downloadCurrentRiskByJobId(id);
+
+        System.out.println(ans);
 
         return ans;
     }
