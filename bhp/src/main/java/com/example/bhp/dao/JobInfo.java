@@ -33,17 +33,7 @@ public class JobInfo
 
             for (Object[] entry: list)
             {
-                if (entry[1] != null)
-                {
-                    ans.add(new JobInfo((JobPosition) entry[0], (RiskAssessment) entry[1], (HazardFactors) entry[2]));
-                }
-                else
-                {
-                    ans.add(new JobInfo((JobPosition) entry[0], null, null));
-                }
-
-
-
+                ans.add(new JobInfo((JobPosition) entry[0], (RiskAssessment) entry[1], (HazardFactors) entry[2]));
             }
 
             return ans;
