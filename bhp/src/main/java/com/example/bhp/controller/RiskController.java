@@ -1,6 +1,7 @@
 package com.example.bhp.controller;
 
 import com.example.bhp.dao.JobInfo;
+import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.repository.RiskAssessmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;

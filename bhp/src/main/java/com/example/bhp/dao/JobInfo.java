@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,7 @@ import java.util.List;
 public class JobInfo
 {
     public JobPosition jobPosition;
-    public RiskAssessment risk;
-    public HazardFactors hf;
+    public List<RiskAssessment> risk;
 
     public static List<JobInfo> listRisk()
     {
@@ -27,13 +27,17 @@ public class JobInfo
 
         Session session = DBConnection.getSession();
 
+        String hql = "SELECT j FROM JobPosition j";
+
         try
         {
-            List<Object[]> list = session.createQuery("Select j, ra, f from JobPosition j left join RiskAssessment ra on ra.jobPosition = j left join ra.factors f on f.riskAssessment = ra", Object[].class).getResultList();
+            List<JobPosition> list = session.createQuery(hql, JobPosition.class).list();
 
-            for (Object[] entry: list)
-            {
-                ans.add(new JobInfo((JobPosition) entry[0], (RiskAssessment) entry[1], (HazardFactors) entry[2]));
+            for (JobPosition entry : list) {
+                JobPosition j = entry;
+                List<RiskAssessment> r = entry.getRiskAssessments();
+
+                ans.add(new JobInfo(j, r));
             }
 
             return ans;
