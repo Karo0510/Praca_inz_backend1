@@ -40,7 +40,7 @@ public class RiskInfo
         }
     }
 
-    public static RiskInfo downloadCurrentRiskByJobId(Long id)
+    public static RiskInfo downloadCurrentRiskByJobIdAndDepartment(Integer dep, Long id)
     {
         Session session = DBConnection.getSession();
 
@@ -48,10 +48,14 @@ public class RiskInfo
         {
             String hql = "Select ra from RiskAssessment ra\n" +
                     "where ra.jobPosition.id = :id\n" +
-                    "and ra.date = (Select MAX(ra.date) from RiskAssessment ra)";
+                    "and ra.date = (Select MAX(ra.date) from RiskAssessment ra)\n" +
+                    "and ra.nr_of_department = :dep";
 
             Query<RiskAssessment> ans = session.createQuery(hql, RiskAssessment.class);
-            RiskAssessment a = ans.setParameter("id", id).getSingleResult();
+            ans.setParameter("dep", dep);
+            ans.setParameter("id", id);
+
+            RiskAssessment a = ans.getSingleResult();
 
             return new RiskInfo(a, a.getFactors());
 

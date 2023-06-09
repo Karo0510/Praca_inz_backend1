@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmployeeBasics
 {
+    public Long id;
     public String firstName;
     public String lastName;
     public String email;
@@ -18,6 +19,7 @@ public class EmployeeBasics
     public EmployeeBasics setData(EmployeeInfo emp)
     {
         System.out.println(emp.getJobPosition().getName());
+        this.id = emp.getEmployee().getId();
         this.firstName = emp.getEmployee().getFirstName();
         this.lastName = emp.getEmployee().getLastName();
         this.email = emp.getEmployee().getEmail();

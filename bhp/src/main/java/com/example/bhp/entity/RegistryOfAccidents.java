@@ -50,7 +50,7 @@ public class RegistryOfAccidents implements Serializable {
     @Column(name="date_of_accidents", nullable = false)
     private LocalDate date = LocalDate.of(2022, 1, 1);
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(name="type_of_accidents", nullable = false) //lekki, ciezki, smiertelny, zbiorowy
     private Accident_priority type;
 

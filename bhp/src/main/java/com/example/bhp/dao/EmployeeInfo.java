@@ -27,20 +27,19 @@ public class EmployeeInfo
     List<TrainingRegister> trainings;
 
 
-    private static List<Object[]> getEmployees()
+    public static List<Object[]> getEmployees()
     {
-        List<EmployeeInfo> ans = new ArrayList<>();
+        List<Object[]> ans = new ArrayList<>();
 
         Session session = DBConnection.getSession();
         //SELECT e, j.job_position_name FROM Employees e LEFT JOIN e.jobPosition j WHERE e.nrOfDepartment = 9"
 
         try
         {
+            //List<Object[]> list = session.createNamedQuery("get_all_employees", Object[].class).list();
+            List<Object[]> list = session.createQuery("SELECT e, j FROM Employees e LEFT JOIN JobPosition j ON e.jobPosition = j", Object[].class).getResultList();
 
-            Query<Object[]> list = session.createNamedQuery(
-                    "get_all_employees", Object[].class);
-
-            return list.list();
+            return list;
 
         }finally{
             session.close();
@@ -56,8 +55,7 @@ public class EmployeeInfo
         try
         {
 
-            Query<Object[]> list = session.createNamedQuery(
-                    "get_all_employees_by_department", Object[].class);
+            Query<Object[]> list = session.createNamedQuery("get_all_employees_by_department", Object[].class);
             list.setParameter("id", number);
 
             return list.list();
@@ -121,9 +119,6 @@ public class EmployeeInfo
             session.close();
         }
     }
-
-
-
 }
 
 

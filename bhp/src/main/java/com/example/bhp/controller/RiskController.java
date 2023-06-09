@@ -29,10 +29,10 @@ public class RiskController {
         return ans;
     }
 
-    @GetMapping("/risk/$job_id={id}")
-    public RiskInfo currentRiskByJobId(@PathVariable(value="id")Long id)
+    @GetMapping("/risk/$department={dep}/$job_id={id}")
+    public RiskInfo currentRiskByJobId(@PathVariable(value="dep") Integer dep, @PathVariable(value="id")Long id)
     {
-        RiskInfo ans = RiskInfo.downloadCurrentRiskByJobId(id);
+        RiskInfo ans = RiskInfo.downloadCurrentRiskByJobIdAndDepartment(dep, id);
 
         System.out.println(ans);
 

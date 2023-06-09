@@ -20,9 +20,9 @@ public class EmployeeDetails extends EmployeeBasics implements Serializable
     {
     }
 
-    public EmployeeDetails(String firstName, String lastName, String email, String jobPosition, Integer nrOfDepartment, List<RegistryKey> numberOfProtocole, List<LocalDate> firstDayPeriodicDate)
+    public EmployeeDetails(Long id, String firstName, String lastName, String email, String jobPosition, Integer nrOfDepartment, List<RegistryKey> numberOfProtocole, List<LocalDate> firstDayPeriodicDate)
     {
-        super(firstName, lastName, email, jobPosition, nrOfDepartment);
+        super(id, firstName, lastName, email, jobPosition, nrOfDepartment);
         this.numberOfProtocole = numberOfProtocole;
         this.firstDayPeriodicDate = firstDayPeriodicDate;
     }

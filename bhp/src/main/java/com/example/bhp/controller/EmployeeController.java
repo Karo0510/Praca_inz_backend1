@@ -78,7 +78,7 @@ public class EmployeeController
 
 
     @GetMapping("/employees")
-    public List<EmployeeBasics> fetchEmployees()
+    public List<EmployeeBasics>fetchEmployees()
     {
         List<EmployeeBasics> emp = new ArrayList<>();
 
