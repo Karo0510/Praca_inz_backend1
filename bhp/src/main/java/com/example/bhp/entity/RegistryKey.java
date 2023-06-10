@@ -22,9 +22,15 @@ public class RegistryKey implements Serializable
 {
     private static final long serialVersionUID = -6792570972318700239L;
     @Column(name="accident_id", nullable = false)
-    private long accidentId;
+    private Long accidentId;
 
     @Column(name="responsible_branch", nullable = true)
     private Integer responsibleBranch;
+
+
+    public String toString()
+    {
+        return this.getAccidentId().toString() + "_" + this.getResponsibleBranch().toString();
+    }
 
 }

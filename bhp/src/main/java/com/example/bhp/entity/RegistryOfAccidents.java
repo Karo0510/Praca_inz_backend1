@@ -29,6 +29,8 @@ import java.util.List;
 
 public class RegistryOfAccidents implements Serializable {
 
+    //XXX: dodac przyczyne wypadku, co sprawdzono, dzialania korygujace
+
     public enum Accident_priority {
         LIGHT,
         HEAVY,
@@ -36,16 +38,8 @@ public class RegistryOfAccidents implements Serializable {
         COLLECTIVE
     }
 
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Column(name="id", nullable = false)
-    //private long id;
-
     @EmbeddedId
     RegistryKey key;
-
-
-    //@Column(name="accident_id", nullable = false, unique = true)
-    //private Long accident_id;
 
     @Column(name="date_of_accidents", nullable = false)
     private LocalDate date = LocalDate.of(2022, 1, 1);
@@ -77,4 +71,6 @@ public class RegistryOfAccidents implements Serializable {
         employees.add(emp);
         emp.getRegister_of_accidents().add(this);
     }
+
+
 }

@@ -13,14 +13,14 @@ import java.util.List;
 
 public class EmployeeDetails extends EmployeeBasics implements Serializable
 {
-    public List<RegistryKey> numberOfProtocole = new ArrayList<>();
+    public List<String> numberOfProtocole = new ArrayList<>();
     public List<LocalDate> firstDayPeriodicDate = new ArrayList<>();
 
     public EmployeeDetails()
     {
     }
 
-    public EmployeeDetails(Long id, String firstName, String lastName, String email, String jobPosition, Integer nrOfDepartment, List<RegistryKey> numberOfProtocole, List<LocalDate> firstDayPeriodicDate)
+    public EmployeeDetails(Long id, String firstName, String lastName, String email, String jobPosition, Integer nrOfDepartment, List<String> numberOfProtocole, List<LocalDate> firstDayPeriodicDate)
     {
         super(id, firstName, lastName, email, jobPosition, nrOfDepartment);
         this.numberOfProtocole = numberOfProtocole;
@@ -34,7 +34,7 @@ public class EmployeeDetails extends EmployeeBasics implements Serializable
         for (RegistryOfAccidents ra: emp.getAccidents())
         {
             System.out.println();
-            this.numberOfProtocole.add(ra.getKey());
+            this.numberOfProtocole.add(ra.getKey().toString());
         }
 
         for (TrainingRegister tr: emp.getTrainings())

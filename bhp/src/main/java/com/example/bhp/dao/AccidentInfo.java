@@ -13,10 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 public class AccidentInfo
 {
+    public RegistryOfAccidents reg;
+
     @Autowired
     private RegisterOfAccidentsRepository register;
-
-    public List<RegistryOfAccidents> accidents = new ArrayList<>();
 
     public AccidentInfo(RegisterOfAccidentsRepository register)
     {
