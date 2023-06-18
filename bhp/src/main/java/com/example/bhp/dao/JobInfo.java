@@ -48,4 +48,35 @@ public class JobInfo
 
     }
 
+    public JobPosition addJobPosition(JobPosition job)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            session.getTransaction().begin();
+            session.persist(job);
+            session.flush();
+            session.getTransaction().commit();
+
+            return job;
+
+        }finally{
+            session.close();
+        }
+    }
+
+
+    public JobPosition addJobPosition(JobPosition job, RiskAssessment risk, Employees employee)
+    {
+       if (risk != null)
+           job.getRiskAssessments().add(risk);
+
+       if (employee != null)
+           job.getEmployees().add(employee);
+
+       return addJobPosition(job);
+    }
+
+
 }

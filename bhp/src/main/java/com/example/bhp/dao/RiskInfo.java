@@ -63,4 +63,35 @@ public class RiskInfo
             session.close();
         }
     }
+
+    public static RiskAssessment addRisk(RiskAssessment risk)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            session.getTransaction().begin();
+            session.persist(risk);
+            session.flush();
+            session.getTransaction().commit();
+
+            return risk;
+
+        }finally{
+            session.close();
+        }
+    }
+
+    public static RiskAssessment addRisk(RiskAssessment risk, List<HazardFactors> hf)
+    {
+        if (hf != null)
+        {
+            for (HazardFactors h: hf)
+            {
+                risk.getFactors().add(h);
+            }
+        }
+
+        return addRisk(risk);
+    }
 }

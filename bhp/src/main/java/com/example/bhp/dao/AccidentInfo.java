@@ -1,5 +1,6 @@
 package com.example.bhp.dao;
 
+import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.RegistryOfAccidents;
 import com.example.bhp.repository.RegisterOfAccidentsRepository;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,23 @@ public class AccidentInfo
     public List<RegistryOfAccidents> accidents()
     {
         return register.findAll();
+    }
+
+    public RegistryOfAccidents addAccident(RegistryOfAccidents accident)
+    {
+        return register.save(accident);
+    }
+
+    public RegistryOfAccidents addAccident(RegistryOfAccidents accident, List<Employees> employee)
+    {
+        if (employee != null)
+        {
+            for (Employees e: employee)
+                accident.getEmployees();
+
+        }
+
+        return addAccident(accident);
     }
 
 

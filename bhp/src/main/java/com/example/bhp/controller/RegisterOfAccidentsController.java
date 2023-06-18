@@ -2,16 +2,14 @@ package com.example.bhp.controller;
 
 
 import com.example.bhp.createViews.AccidentBasics;
-import com.example.bhp.dao.AccidentInfo;
+import com.example.bhp.createViews.AccidentDetails;
 import com.example.bhp.entity.RegistryOfAccidents;
 import com.example.bhp.repository.RegisterOfAccidentsRepository;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api")
@@ -50,7 +48,7 @@ public class RegisterOfAccidentsController {
     }
 
     @GetMapping("/register_of_accidents/$data={data}")
-    public RegistryOfAccidents findByData(@PathVariable(value="data") String data)
+    public AccidentDetails findByData(@PathVariable(value="data") String data)
     {
         String[] entry = data.split("_");
         Long l = Long.parseLong(entry[0]);
@@ -62,9 +60,12 @@ public class RegisterOfAccidentsController {
 
 
     @GetMapping("/register_of_accidents/$id={id}&branch={branch}")
-    public RegistryOfAccidents findAllByAccidentByIdAndBranch(@PathVariable (value = "id") Long id, @PathVariable (value="branch") Integer branch)
+    public AccidentDetails findAllByAccidentByIdAndBranch(@PathVariable (value = "id") Long id, @PathVariable (value="branch") Integer branch)
     {
-        return register.findByKeyResponsibleBranchAndKeyAccidentId(branch, id);
+        RegistryOfAccidents reg =  register.findByKeyResponsibleBranchAndKeyAccidentId(branch, id);
+        AccidentDetails ans = new AccidentDetails().setData(reg);
+
+        return ans;
     }
 
     @PostMapping("/register_of_accidents")

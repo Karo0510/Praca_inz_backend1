@@ -5,6 +5,7 @@ import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RegistryOfAccidents;
 import com.example.bhp.entity.TrainingRegister;
+import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -118,6 +119,19 @@ public class EmployeeInfo
         }finally{
             session.close();
         }
+    }
+
+    public static Employees AddEmployee(Employees employee)
+    {
+
+        Session session = DBConnection.getSession();
+
+        session.getTransaction().begin();
+        session.persist(employee);
+        session.flush();
+        session.getTransaction().commit();
+
+        return employee;
     }
 }
 

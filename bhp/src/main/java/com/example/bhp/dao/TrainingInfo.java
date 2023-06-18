@@ -1,6 +1,7 @@
 package com.example.bhp.dao;
 
 import com.example.bhp.data_initializer.DBConnection;
+import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.entity.TrainingRegister;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -28,4 +29,24 @@ public class TrainingInfo
             session.close();
         }
     }
+
+    public static TrainingRegister addTraining(TrainingRegister training)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            session.getTransaction().begin();
+            session.persist(training);
+            session.flush();
+            session.getTransaction().commit();
+
+            return training;
+
+        }finally{
+            session.close();
+        }
+    }
+
+
 }
