@@ -8,16 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
-class EmployeeBasic
-{
-    public Long id;
-    public String firstName;
-    public String LastName;
-}
+
 
 public class AccidentDetails extends AccidentBasics
 {
-    public List<EmployeeBasic> data = new ArrayList<>();
+    public List<Long> IdEmployees = new ArrayList<>();
+
+    public AccidentDetails() {
+
+    }
 
     public AccidentDetails setData(RegistryOfAccidents info)
     {
@@ -25,7 +24,7 @@ public class AccidentDetails extends AccidentBasics
 
         for (Employees emp: info.getEmployees())
         {
-            this.data.add(new EmployeeBasic(emp.getId(), emp.getFirstName(), emp.getLastName()));
+            this.IdEmployees.add(emp.getId());
         }
 
         return this;

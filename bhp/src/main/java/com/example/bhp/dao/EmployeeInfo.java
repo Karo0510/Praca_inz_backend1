@@ -27,6 +27,22 @@ public class EmployeeInfo
     List<RegistryOfAccidents> accidents;
     List<TrainingRegister> trainings;
 
+    private static List<Employees> getAllEmployees()
+    {
+
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            List<Employees> list = session.createQuery("SELECT e FROM Employees e", Employees.class).getResultList();
+
+            return list;
+
+        }finally{
+            session.close();
+        }
+    }
+
 
     public static List<Object[]> getEmployees()
     {
@@ -121,8 +137,26 @@ public class EmployeeInfo
         }
     }
 
+    public static boolean validation(Employees employee)
+    {
+        List<Employees> emp = EmployeeInfo.getAllEmployees();
+
+        if (emp.contains(employee))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
     public static Employees AddEmployee(Employees employee)
     {
+        //XXX: zmienic na tworzenie wlasnych wyjatkow
+        if (validation(employee) == true)
+        {
+            return null;
+        }
 
         Session session = DBConnection.getSession();
 

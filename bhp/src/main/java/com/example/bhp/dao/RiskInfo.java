@@ -19,6 +19,21 @@ public class RiskInfo
     public RiskAssessment ra;
     public List<HazardFactors> hf = new ArrayList<>();
 
+    public static List<RiskAssessment> checkAllRisks()
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            List<RiskAssessment> list = session.createQuery("Select ra from RiskAssessment ra", RiskAssessment.class).getResultList();
+
+            return list;
+
+        }finally{
+            session.close();
+        }
+    }
+
     public List<RiskInfo> downloadData()
     {
         List<RiskInfo> ans = new ArrayList<>();
@@ -34,6 +49,30 @@ public class RiskInfo
             }
 
             return ans;
+
+        }finally{
+            session.close();
+        }
+    }
+
+    public static RiskInfo downloadCurrentRiskByJobId(Long id)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            String hql = "SELECT ra FROM RiskAssessment ra\n" +
+                    "WHERE ra.jobPosition.id = :id\n" +
+                    "AND ra.date = (\n" +
+                    "    SELECT MAX(tab.date) FROM RiskAssessment tab WHERE tab.jobPosition.id = :id\n" +
+                    ")";
+
+            Query<RiskAssessment> ans = session.createQuery(hql, RiskAssessment.class);
+            ans.setParameter("id", id);
+
+            RiskAssessment a = ans.getSingleResult();
+
+            return new RiskInfo(a, a.getFactors());
 
         }finally{
             session.close();
@@ -88,7 +127,8 @@ public class RiskInfo
         {
             for (HazardFactors h: hf)
             {
-                risk.getFactors().add(h);
+                if (!risk.getFactors().contains(h))
+                    risk.getFactors().add(h);
             }
         }
 

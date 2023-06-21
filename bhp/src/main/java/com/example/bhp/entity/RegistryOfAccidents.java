@@ -29,7 +29,7 @@ import java.util.List;
 
 public class RegistryOfAccidents implements Serializable {
 
-    //XXX: dodac przyczyne wypadku, co sprawdzono, dzialania korygujace
+    //XXX: dodac przyczyne wypadku, co sprawdzono, dzialania korygujace, sprobować poprawić enum na string
 
     public enum Accident_priority {
         LIGHT,
@@ -72,5 +72,31 @@ public class RegistryOfAccidents implements Serializable {
         emp.getRegister_of_accidents().add(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RegistryOfAccidents)) return false;
 
+        RegistryOfAccidents accidents = (RegistryOfAccidents) o;
+
+        if (isAccident != accidents.isAccident) return false;
+        if (key != null ? !key.equals(accidents.key) : accidents.key != null) return false;
+        if (date != null ? !date.equals(accidents.date) : accidents.date != null) return false;
+        if (type != accidents.type) return false;
+        if (place != null ? !place.equals(accidents.place) : accidents.place != null) return false;
+        if (number != null ? !number.equals(accidents.number) : accidents.number != null) return false;
+        return protocole != null ? protocole.equals(accidents.protocole) : accidents.protocole == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = key != null ? key.hashCode() : 0;
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (place != null ? place.hashCode() : 0);
+        result = 31 * result + (number != null ? number.hashCode() : 0);
+        result = 31 * result + (protocole != null ? protocole.hashCode() : 0);
+        result = 31 * result + (isAccident ? 1 : 0);
+        return result;
+    }
 }

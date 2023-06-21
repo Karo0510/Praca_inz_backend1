@@ -5,11 +5,12 @@ import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.HazardFactors;
 import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RiskAssessment;
+import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,49 @@ public class JobInfo
 {
     public JobPosition jobPosition;
     public List<RiskAssessment> risk;
+
+    public static List<JobPosition> getAllPositions()
+    {
+        Session session = DBConnection.getSession();
+
+        String hql = "SELECT j FROM JobPosition j";
+
+        try
+        {
+            TypedQuery<JobPosition> query = session.createQuery(hql, JobPosition.class);
+
+            List<JobPosition> job = query.getResultList();
+
+            return job;
+
+        }finally{
+            session.close();
+        }
+
+    }
+
+    public static JobPosition getById(Long id)
+    {
+        Session session = DBConnection.getSession();
+
+        String hql = "SELECT j FROM JobPosition j where id=:id";
+
+        try
+        {
+            TypedQuery<JobPosition> query = session.createQuery(hql, JobPosition.class);
+            query.setParameter("id", id);
+
+            JobPosition job = query.getSingleResult();
+
+            System.out.println(job.getName());
+
+            return job;
+
+        }finally{
+            session.close();
+        }
+
+    }
 
     public static List<JobInfo> listRisk()
     {
@@ -48,21 +92,41 @@ public class JobInfo
 
     }
 
-    public JobPosition addJobPosition(JobPosition job)
+    public static boolean validation(JobPosition job)
     {
-        Session session = DBConnection.getSession();
+        List<JobPosition> positions = JobInfo.getAllPositions();
 
-        try
+        if (positions.contains(job))
         {
-            session.getTransaction().begin();
-            session.persist(job);
-            session.flush();
-            session.getTransaction().commit();
+            return true;
+        }
 
-            return job;
+        return false;
+    }
 
-        }finally{
-            session.close();
+    public static JobPosition addJobPosition(JobPosition job)
+    {
+
+        if (JobInfo.validation(job) == false)
+        {
+            Session session = DBConnection.getSession();
+
+            try
+            {
+                session.getTransaction().begin();
+                session.persist(job);
+                session.flush();
+                session.getTransaction().commit();
+
+                return job;
+
+            }finally{
+                session.close();
+            }
+        }
+        else
+        {
+            return null;
         }
     }
 

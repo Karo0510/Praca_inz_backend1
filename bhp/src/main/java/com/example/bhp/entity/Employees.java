@@ -85,11 +85,21 @@ public class Employees implements Serializable{
     @Column(name="nr_of_department", nullable = true)
     private Integer nrOfDepartment;
 
-    @ManyToOne//(cascade = CascadeType.ALL)
-    @JoinColumn(name = "job_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "job_id")
     @JsonBackReference(value = "**")
     private JobPosition jobPosition;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Employees)) return false;
+
+        Employees employees = (Employees) o;
+
+        if (!firstName.equals(employees.firstName)) return false;
+        return lastName.equals(employees.lastName);
+    }
 
 }
 

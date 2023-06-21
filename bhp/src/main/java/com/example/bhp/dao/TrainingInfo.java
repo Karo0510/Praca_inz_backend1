@@ -1,6 +1,7 @@
 package com.example.bhp.dao;
 
 import com.example.bhp.data_initializer.DBConnection;
+import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.entity.TrainingRegister;
 import jakarta.persistence.EntityManager;
@@ -46,6 +47,27 @@ public class TrainingInfo
         }finally{
             session.close();
         }
+    }
+
+    public static TrainingRegister addTraining(TrainingRegister training, Employees e)
+    {
+        if (!training.getEmployees().contains(e))
+        {
+            training.getEmployees().add(e);
+        }
+
+        return addTraining(training);
+    }
+
+    public static TrainingRegister addTraining(TrainingRegister training, List<Employees> e)
+    {
+        for (Employees emp: e)
+        {
+            if (!training.getEmployees().contains(emp))
+                training.getEmployees().add(emp);
+        }
+        
+        return addTraining(training);
     }
 
 

@@ -12,55 +12,32 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccidentInfo
-{
-    public RegistryOfAccidents reg;
+public class AccidentInfo {
 
     @Autowired
     private RegisterOfAccidentsRepository register;
 
-    public AccidentInfo(RegisterOfAccidentsRepository register)
-    {
-        this.register = register;
+    private boolean validation(RegistryOfAccidents registry) {
+        List<RegistryOfAccidents> reg = this.register.findAll();
+
+        if (reg.contains(registry))
+            return true;
+
+        return false;
     }
 
-
-    public List<RegistryOfAccidents> accidentListByResponsibleBranch(Integer branch)
+    public RegistryOfAccidents addAccident(RegistryOfAccidents registry)
     {
-        return register.findByKeyResponsibleBranch(branch);
-    }
-
-    public List<RegistryOfAccidents> accidentListById (Long id)
-    {
-        return register.findByKeyAccidentId(id);
-    }
-
-    public RegistryOfAccidents accidentByBranchAndId(Integer branch, Long id)
-    {
-        return register.findByKeyResponsibleBranchAndKeyAccidentId(branch, id);
-    }
-
-    public List<RegistryOfAccidents> accidents()
-    {
-        return register.findAll();
-    }
-
-    public RegistryOfAccidents addAccident(RegistryOfAccidents accident)
-    {
-        return register.save(accident);
-    }
-
-    public RegistryOfAccidents addAccident(RegistryOfAccidents accident, List<Employees> employee)
-    {
-        if (employee != null)
-        {
-            for (Employees e: employee)
-                accident.getEmployees();
-
+        if (validation(registry) == false) {
+            register.saveAndFlush(registry);
+            return registry;
         }
 
-        return addAccident(accident);
+        return null;
     }
+
+
+
 
 
 

@@ -18,4 +18,5 @@ public interface RegisterOfAccidentsRepository extends JpaRepository<RegistryOfA
     @Query("select r from RegistryOfAccidents r where r.key.responsibleBranch = ?1 and r.key.accidentId = ?2")
     public RegistryOfAccidents findByKeyResponsibleBranchAndKeyAccidentId(Integer branch, Long id);
 
+
 }

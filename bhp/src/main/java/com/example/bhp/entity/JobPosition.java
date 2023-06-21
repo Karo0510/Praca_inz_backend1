@@ -18,7 +18,7 @@ public class JobPosition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="job_position_id", nullable = false)
-    private long id;
+    private Long id;
 
     @Column(name="job_position_name", nullable = false, unique = true)
     private String name;
@@ -45,7 +45,27 @@ public class JobPosition {
     @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
     private List<Employees> employees = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof JobPosition)) return false;
 
+        JobPosition that = (JobPosition) o;
 
+        if (isChemicalRisk != that.isChemicalRisk) return false;
+        if (isBiologicalRisk != that.isBiologicalRisk) return false;
+        if (isPhysicalRisk != that.isPhysicalRisk) return false;
+        if (isMentalStress != that.isMentalStress) return false;
+        return name.equals(that.name);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (isChemicalRisk ? 1 : 0);
+        result = 31 * result + (isBiologicalRisk ? 1 : 0);
+        result = 31 * result + (isPhysicalRisk ? 1 : 0);
+        result = 31 * result + (isMentalStress ? 1 : 0);
+        return result;
+    }
 }

@@ -35,7 +35,7 @@ public class RiskAssessment {
     private JobPosition jobPosition;
 
 
-    @OneToMany(mappedBy = "riskAssessment", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "riskAssessment", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @Builder.Default
     @JsonBackReference(value = "**")
     List<HazardFactors> factors = new ArrayList<>();
