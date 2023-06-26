@@ -1,0 +1,71 @@
+package com.example.bhp.controller;
+import com.example.bhp.auth.CustomUserDetailsService;
+import com.example.bhp.auth.LoginDTO;
+import com.example.bhp.auth.UserDTO;
+import com.example.bhp.auth.Users;
+import com.example.bhp.repository.UsersRepository;
+import com.example.bhp.services.UserServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+
+import javax.naming.AuthenticationException;
+
+@RestController
+@EntityScan(basePackages = {"com.example"})
+@RequestMapping("")
+public class AuthController
+{
+    @Autowired
+    private UserServices userServices;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+
+    @PostMapping(path = "/save")
+    public String saveUser(@RequestBody UserDTO userDTO)
+    {
+        String id = userServices.addUser(userDTO);
+        return id;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
+    {
+        String username = loginDTO.getEmail();
+        String password = loginDTO.getPassword();
+
+        UserDTO res = userServices.loginUser(loginDTO);
+
+        if (res != null)
+        {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(res, res.getPassword(), res.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
+
+    @GetMapping(path = "/home")
+    public String Hello()
+    {
+        return "hello";
+    }
+
+}
