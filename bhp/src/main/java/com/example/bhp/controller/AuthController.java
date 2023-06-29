@@ -21,7 +21,7 @@ import javax.naming.AuthenticationException;
 
 @RestController
 @EntityScan(basePackages = {"com.example"})
-@RequestMapping("")
+@RequestMapping("/api")
 public class AuthController
 {
     @Autowired
@@ -37,14 +37,14 @@ public class AuthController
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    @PostMapping(path = "/save")
+    @PostMapping(value = "/save")
     public String saveUser(@RequestBody UserDTO userDTO)
     {
         String id = userServices.addUser(userDTO);
         return id;
     }
 
-    @PostMapping("/login")
+    @PostMapping(value="/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
     {
         String username = loginDTO.getEmail();
