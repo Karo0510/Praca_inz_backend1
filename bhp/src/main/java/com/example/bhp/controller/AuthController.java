@@ -22,8 +22,7 @@ import javax.naming.AuthenticationException;
 @RestController
 @EntityScan(basePackages = {"com.example"})
 @RequestMapping("/api")
-public class AuthController
-{
+public class AuthController {
     @Autowired
     private UserServices userServices;
 
@@ -38,16 +37,15 @@ public class AuthController
 
 
     @PostMapping(value = "/save")
-    public String saveUser(@RequestBody UserDTO userDTO)
-    {
+    public String saveUser(@RequestBody UserDTO userDTO) {
         String id = userServices.addUser(userDTO);
         return id;
     }
 
-    @PostMapping(value="/login")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
-    {
-        String username = loginDTO.getEmail();
+    //@PostMapping(value="/login")
+    // public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
+    //{
+        /*String username = loginDTO.getEmail();
         String password = loginDTO.getPassword();
 
         UserDTO res = userServices.loginUser(loginDTO);
@@ -59,13 +57,17 @@ public class AuthController
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
-    }
+        }*/
 
-    @GetMapping(path = "/home")
-    public String Hello()
+    //return null;
+    //}
+
+
+    @PostMapping(value = "/home")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
     {
-        return "hello";
+        System.out.println("vskdjhcf;jlas");
+        return ResponseEntity.ok(loginDTO.getEmail());
     }
 
 }

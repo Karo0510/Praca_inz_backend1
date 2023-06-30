@@ -54,6 +54,7 @@ public class RegisterOfAccidentsController {
         Long l = Long.parseLong(entry[0]);
         Integer i = Integer.parseInt(entry[1]);
 
+        System.out.println(findAllByAccidentByIdAndBranch(l, i));
         //String data1 = data;
         return findAllByAccidentByIdAndBranch(l, i);
     }

@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cglib.core.Local;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -38,12 +39,17 @@ public class BhpApplication implements CommandLineRunner
 
 	public static void main(String[] args) {
 
+		SecurityContextHolder.clearContext();
 		SpringApplication.run(BhpApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 
+
+		ThreadLocal<String> threadLocal = new ThreadLocal<>();
+		threadLocal.remove();
+		SecurityContextHolder.clearContext();
 		/*JobPosition jobPosition1 = JobPosition.builder()
 				.name("C++ Developer")
 				.isMentalStress(true)
