@@ -1,4 +1,4 @@
-package com.example.bhp.auth;
+package com.example.bhp.entity;
 
 import com.sun.jdi.LongType;
 import lombok.*;
@@ -23,7 +23,6 @@ import java.util.List;
 })
 public class Users
 {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,6 +39,4 @@ public class Users
         this.password = encode;
         this.role = "ROLE_ADMIN";
     }
-
-
 }

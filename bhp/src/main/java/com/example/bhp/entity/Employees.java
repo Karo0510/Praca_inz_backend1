@@ -43,7 +43,7 @@ public class Employees implements Serializable{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    @JsonBackReference(value = "**")
+    @JsonBackReference(value = "periodic_trainings_employee_reference")
     @JoinTable(name = "employees_periodic_trainings",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "training_id")
@@ -52,7 +52,7 @@ public class Employees implements Serializable{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Builder.Default
-    @JsonBackReference(value = "**")
+    @JsonBackReference(value = "employees_accidents_employees_reference")
     @JoinTable(name = "employees_accident",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = {
@@ -87,7 +87,7 @@ public class Employees implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "job_id")
-    @JsonBackReference(value = "**")
+    @JsonBackReference(value = "job_position_employees_reference")
     private JobPosition jobPosition;
 
     @Override

@@ -2,17 +2,12 @@ package com.example.bhp.services;
 
 import com.example.bhp.auth.LoginDTO;
 import com.example.bhp.auth.UserDTO;
-import com.example.bhp.auth.Users;
+import com.example.bhp.entity.Users;
 import com.example.bhp.repository.UsersRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @Service

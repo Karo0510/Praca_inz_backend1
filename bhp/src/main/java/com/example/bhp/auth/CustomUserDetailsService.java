@@ -1,8 +1,8 @@
 package com.example.bhp.auth;
 
+import com.example.bhp.entity.Users;
 import com.example.bhp.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -40,5 +40,4 @@ public class RiskAssessment {
     @JsonBackReference(value = "**")
     List<HazardFactors> factors = new ArrayList<>();
 
-
 }

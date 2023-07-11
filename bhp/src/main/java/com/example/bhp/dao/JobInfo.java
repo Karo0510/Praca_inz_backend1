@@ -5,6 +5,7 @@ import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.HazardFactors;
 import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RiskAssessment;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -90,6 +91,33 @@ public class JobInfo
             session.close();
         }
 
+    }
+
+    public static JobPosition getJobByName(String jobName)
+    {
+        Session session = DBConnection.getSession();
+
+        String hql = "SELECT j FROM JobPosition j where j.name=:name";
+
+        try
+        {
+            TypedQuery<JobPosition> query = session.createQuery(hql, JobPosition.class);
+            query.setParameter("name", jobName);
+
+            JobPosition job = query.getSingleResult();
+
+            System.out.println(job.getName());
+
+            return job;
+        }
+        catch(NoResultException ex)
+        {
+            System.out.println("Brak rezultatu");
+            return null;
+        }
+        finally{
+            session.close();
+        }
     }
 
     public static boolean validation(JobPosition job)

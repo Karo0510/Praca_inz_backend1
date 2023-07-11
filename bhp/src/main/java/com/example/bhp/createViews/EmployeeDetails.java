@@ -1,9 +1,9 @@
 package com.example.bhp.createViews;
 
 import com.example.bhp.dao.EmployeeInfo;
-import com.example.bhp.entity.RegistryKey;
-import com.example.bhp.entity.RegistryOfAccidents;
-import com.example.bhp.entity.TrainingRegister;
+import com.example.bhp.dao.JobInfo;
+import com.example.bhp.entity.*;
+import lombok.Getter;
 import org.hibernate.annotations.Fetch;
 
 import java.io.Serializable;
@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class EmployeeDetails extends EmployeeBasics implements Serializable
 {
     public List<String> numberOfProtocole = new ArrayList<>();
@@ -44,4 +45,5 @@ public class EmployeeDetails extends EmployeeBasics implements Serializable
 
         return this;
     }
+
 }

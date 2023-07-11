@@ -1,7 +1,6 @@
 package com.example.bhp.repository;
 
-import com.example.bhp.auth.Users;
-import com.example.bhp.entity.TrainingRegister;
+import com.example.bhp.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

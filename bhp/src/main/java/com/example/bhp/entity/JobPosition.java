@@ -14,7 +14,8 @@ import java.util.List;
 @Entity
 @Table(name = "job_position")
 
-public class JobPosition {
+public class JobPosition
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="job_position_id", nullable = false)
@@ -41,7 +42,7 @@ public class JobPosition {
     private List<RiskAssessment> riskAssessments = new ArrayList<>();
 
     @Builder.Default
-    @JsonBackReference(value = "**")
+    @JsonBackReference(value = "job_position_employees_reference")
     @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
     private List<Employees> employees = new ArrayList<>();
 

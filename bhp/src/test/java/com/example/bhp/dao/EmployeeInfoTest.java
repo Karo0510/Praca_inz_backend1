@@ -42,7 +42,7 @@ class EmployeeInfoTest {
                 .jobPosition(position)
                 .build();
 
-        Employees emp = EmployeeInfo.AddEmployee(employee1);
+        Employees emp = EmployeeInfo.addEmployee(employee1);
 
         assertNotNull(emp);
 
@@ -56,7 +56,7 @@ class EmployeeInfoTest {
                 .jobPosition(position)
                 .build();
 
-        Employees emp2 = EmployeeInfo.AddEmployee(employee2);
+        Employees emp2 = EmployeeInfo.addEmployee(employee2);
 
         assertNull(emp2);
 

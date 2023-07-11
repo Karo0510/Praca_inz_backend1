@@ -2,8 +2,7 @@ package com.example.bhp.services;
 
 import com.example.bhp.auth.LoginDTO;
 import com.example.bhp.auth.UserDTO;
-import com.example.bhp.auth.Users;
-import org.springframework.http.ResponseEntity;
+import com.example.bhp.entity.Users;
 
 public interface UserServices
 {

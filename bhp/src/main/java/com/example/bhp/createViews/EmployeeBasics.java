@@ -1,10 +1,16 @@
 package com.example.bhp.createViews;
 
 import com.example.bhp.dao.EmployeeInfo;
+import com.example.bhp.dao.JobInfo;
+import com.example.bhp.entity.Employees;
+import com.example.bhp.entity.JobPosition;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeBasics
@@ -27,5 +33,31 @@ public class EmployeeBasics
         this.nrOfDepartment = emp.getEmployee().getNrOfDepartment();
 
         return this;
+    }
+
+    public static Employees getEmployee(EmployeeBasics emp)
+    {
+        Employees employee = Employees.builder()
+                .firstName(emp.getFirstName())
+                .lastName(emp.getLastName())
+                .nrOfDepartment(emp.getNrOfDepartment())
+                .email(emp.getEmail())
+                .date(LocalDate.now())
+                .build();
+
+        JobPosition job = JobInfo.getJobByName(emp.getJobPosition());
+
+        if (job == null)
+        {
+            return null;
+        }
+        else
+        {
+            employee.setJobPosition(job);
+        }
+
+        Employees savedEmp = EmployeeInfo.addEmployee(employee);
+
+        return savedEmp;
     }
 }

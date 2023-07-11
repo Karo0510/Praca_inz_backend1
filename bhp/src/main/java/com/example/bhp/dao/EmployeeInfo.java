@@ -35,7 +35,6 @@ public class EmployeeInfo
         try
         {
             List<Employees> list = session.createQuery("SELECT e FROM Employees e", Employees.class).getResultList();
-
             return list;
 
         }finally{
@@ -150,7 +149,7 @@ public class EmployeeInfo
     }
 
 
-    public static Employees AddEmployee(Employees employee)
+    public static Employees addEmployee(Employees employee)
     {
         //XXX: zmienic na tworzenie wlasnych wyjatkow
         if (validation(employee) == true)

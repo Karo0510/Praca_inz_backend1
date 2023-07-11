@@ -1,6 +1,6 @@
 package com.example.bhp.auth;
 
-
+import com.example.bhp.entity.Users;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

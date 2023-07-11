@@ -3,14 +3,18 @@ package com.example.bhp.controller;
 import com.example.bhp.createViews.EmployeeBasics;
 import com.example.bhp.createViews.EmployeeDetails;
 import com.example.bhp.dao.EmployeeInfo;
+import com.example.bhp.dao.JobInfo;
 import com.example.bhp.entity.Employees;
+import com.example.bhp.entity.JobPosition;
 import com.example.bhp.repository.EmployeeRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,9 +124,64 @@ public class EmployeeController
     }*/
 
 
-    @PostMapping("/employees")
-    public Employees addEmployee(@RequestBody Employees employee) {
+    /*@PostMapping("/employees")
+    public Employees addEmployee(@RequestBody Employees employee)
+    {
         return employeeRepository.save(employee);
+    }*/
+
+    /*@PostMapping("/employees")
+    public ResponseEntity add(@RequestBody EmployeeDetails employee) {
+
+        Employees emp = Employees.builder()
+                .firstName(employee.firstName)
+                .lastName(employee.lastName)
+                .nrOfDepartment(employee.nrOfDepartment)
+                .email(employee.email)
+                .date(LocalDate.now())
+                .build();
+
+        JobPosition job = JobInfo.getJobByName(employee.jobPosition);
+
+        if (job == null)
+        {
+            return ResponseEntity.ok("Nie znaleziono stanowiska. Proszę, podaj inne lub uzupełnij je w sekcji Job");
+        }
+        else
+        {
+            emp.setJobPosition(job);
+        }
+
+        Employees savedEmp = EmployeeInfo.addEmployee(emp);
+
+        if (savedEmp == null)
+        {
+            return ResponseEntity.ok("Nie dodano pracownika");
+        }
+
+        return ResponseEntity.ok("Pracownik zostal zapisany");
+    }*/
+
+    @PostMapping("/add_employees")
+    public ResponseEntity<String> addEmployees(@RequestBody List<EmployeeBasics> employee)
+    {
+        int count = 0;
+
+        if (employee.isEmpty())
+        {
+            return ResponseEntity.ok("Lista jest pusta");
+        }
+
+        for (int i = 0; i < employee.size(); i++)
+        {
+            Employees savedEmp = EmployeeBasics.getEmployee(employee.get(i));
+
+            if (savedEmp != null)
+                count++;
+        }
+
+        return ResponseEntity.ok("Zapisano "+count+" z "+employee.size());
     }
+
 }
 
