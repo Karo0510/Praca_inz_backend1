@@ -28,10 +28,6 @@ import java.util.List;
         }
 )
 
-
-
-
-
 public class TrainingRegister implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

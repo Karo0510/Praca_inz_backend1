@@ -70,7 +70,6 @@ public class EmployeeInfo
 
         try
         {
-
             Query<Object[]> list = session.createNamedQuery("get_all_employees_by_department", Object[].class);
             list.setParameter("id", number);
 
@@ -135,6 +134,25 @@ public class EmployeeInfo
             session.close();
         }
     }
+
+    public static Employees findEmployeeById(Long number)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            Query<Employees> list = session.createNamedQuery("find_employee_by_id", Employees.class);
+            list.setParameter("id", number);
+
+            Employees e  = list.getSingleResult();
+
+            return e;
+
+        }finally{
+            session.close();
+        }
+    }
+
 
     public static boolean validation(Employees employee)
     {

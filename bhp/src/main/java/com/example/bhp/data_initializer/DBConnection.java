@@ -8,12 +8,10 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 public class DBConnection {
-
     private static SessionFactory factory;
 
     static {
-        try
-        {
+        try {
             Configuration cfg = new Configuration();
             cfg.configure("cfg.xml");
 
@@ -28,12 +26,10 @@ public class DBConnection {
                     .build();
 
             factory = cfg.buildSessionFactory(serviceRegistry);
-        }catch(Throwable ex)
-        {
+        }catch(Throwable ex) {
             System.err.println("Inicjalizacja SessionFactory nie powiodła się: " + ex);
             throw new ExceptionInInitializerError(ex);
         }
-
     }
 
     public static Session getSession() {
@@ -45,5 +41,4 @@ public class DBConnection {
     public static void close() {
         factory.close();
     }
-
 }

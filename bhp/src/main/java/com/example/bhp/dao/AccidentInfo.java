@@ -17,28 +17,5 @@ public class AccidentInfo {
     @Autowired
     private RegisterOfAccidentsRepository register;
 
-    private boolean validation(RegistryOfAccidents registry) {
-        List<RegistryOfAccidents> reg = this.register.findAll();
-
-        if (reg.contains(registry))
-            return true;
-
-        return false;
-    }
-
-    public RegistryOfAccidents addAccident(RegistryOfAccidents registry)
-    {
-        if (validation(registry) == false) {
-            register.saveAndFlush(registry);
-            return registry;
-        }
-
-        return null;
-    }
-
-
-
-
-
 
 }

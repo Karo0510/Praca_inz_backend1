@@ -4,10 +4,12 @@ import com.example.bhp.createViews.JobDetails;
 import com.example.bhp.dao.JobInfo;
 import com.example.bhp.dao.RiskInfo;
 import com.example.bhp.entity.JobPosition;
+import com.example.bhp.entity.RegistryOfAccidents;
 import com.example.bhp.entity.RiskAssessment;
 import com.example.bhp.repository.RiskAssessmentRepository;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class RiskController {
 
     @Autowired
     private RiskAssessmentRepository register;
+
 
     @GetMapping("/risk")
     public List<JobInfo> fetchRisk()
@@ -54,16 +57,18 @@ public class RiskController {
     @PostMapping("/risk")
     public ResponseEntity addRisk(@RequestBody JobDetails job)
     {
+
+        //XXX: poprawić walidacje funkcji findRisk!!!!
+        System.out.println(job.getJobName());
+
         if (job.getFactors().isEmpty())
-        {
-            return ResponseEntity.ok("Lista jest pusta");
-        }
+            return new ResponseEntity<String>("Lista czynnikow jest pusta", HttpStatus.NOT_ACCEPTABLE);
 
         System.out.println(job.getLastRisk());
 
         JobPosition foundJob = JobInfo.getJobByName(job.getJobName());
 
-        System.out.println(job.getFactors());
+        System.out.println(foundJob.getName());
 
         RiskAssessment riskAssessment = RiskAssessment.builder()
                 .jobPosition(foundJob)
@@ -72,11 +77,21 @@ public class RiskController {
                 .factors(job.getFactors())
                 .build();
 
-        RiskAssessment savedRisk = RiskInfo.addRisk(riskAssessment);
+        for (int i = 0; i<job.getFactors().size(); i++)
+            riskAssessment.getFactors().get(i).setRiskAssessment(riskAssessment);
 
-        if (savedRisk == null)
+        RiskAssessment savedRisk = null;
+
+        try
         {
-            return ResponseEntity.ok("Nie zapisano oceny ryzyka");
+            savedRisk = RiskInfo.addRisk(riskAssessment);
+        }catch(NonUniqueResultException ex)
+        {
+            return new ResponseEntity<String>("Już stworzono ocene ryzyka w dniu "+ job.getLastRisk() + " dla stanowiska "+job.getJobName(), HttpStatus.NOT_ACCEPTABLE);
+        }
+        catch(Exception ex)
+        {
+            return new ResponseEntity<String>("Problem z zapisem", HttpStatus.NOT_ACCEPTABLE);
         }
 
         return ResponseEntity.ok("ok");

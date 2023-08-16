@@ -1,6 +1,5 @@
 package com.example.bhp.auth;
 
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +22,4 @@ public class LoginDTO
         this.email = email;
         this.password = password;
     }
-
 }

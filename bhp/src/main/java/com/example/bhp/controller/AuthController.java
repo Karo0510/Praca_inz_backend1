@@ -5,10 +5,13 @@ import com.example.bhp.auth.UserDTO;
 import com.example.bhp.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @EntityScan(basePackages = {"com.example"})
@@ -33,31 +36,10 @@ public class AuthController {
         return id;
     }
 
-    //@PostMapping(value="/login")
-    // public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
-    //{
-        /*String username = loginDTO.getEmail();
-        String password = loginDTO.getPassword();
-
-        UserDTO res = userServices.loginUser(loginDTO);
-
-        if (res != null)
-        {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(res, res.getPassword(), res.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }*/
-
-    //return null;
-    //}
-
 
     @PostMapping(value = "/home")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
     {
-        //System.out.println("vskdjhcf;jlas");
         return ResponseEntity.ok(loginDTO.getEmail());
     }
 

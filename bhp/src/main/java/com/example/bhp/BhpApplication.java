@@ -3,13 +3,17 @@ package com.example.bhp;
 import com.example.bhp.data_initializer.DBConnection;
 import com.example.bhp.entity.*;
 import com.example.bhp.repository.*;
+import org.apache.catalina.core.ApplicationContext;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cglib.core.Local;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -39,17 +43,26 @@ public class BhpApplication implements CommandLineRunner
 
 	public static void main(String[] args) {
 
-		SecurityContextHolder.clearContext();
-		SpringApplication.run(BhpApplication.class, args);
+		//SecurityContextHolder.clearContext();
+
+		ConfigurableApplicationContext context =SpringApplication.run(BhpApplication.class, args);
+
+		String[] classes = context.getBeanNamesForAnnotation(RestControllerAdvice.class);
+
+
+		for (int i = 0; i<classes.length; i++)
+		{
+			System.out.println(classes[i]);
+		}
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 
 
-		ThreadLocal<String> threadLocal = new ThreadLocal<>();
-		threadLocal.remove();
-		SecurityContextHolder.clearContext();
+		//ThreadLocal<String> threadLocal = new ThreadLocal<>();
+		//threadLocal.remove();
+		//SecurityContextHolder.clearContext();
 		/*JobPosition jobPosition1 = JobPosition.builder()
 				.name("C++ Developer")
 				.isMentalStress(true)
@@ -292,6 +305,8 @@ public class BhpApplication implements CommandLineRunner
 
 		//riskRepository.save(r1);
 		//riskRepository.save(r2);*/
+
+
 
 	}
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
 
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -63,9 +62,6 @@ public class RegistryOfAccidents implements Serializable {
     @Builder.Default
     @ManyToMany(mappedBy = "register_of_accidents")
     private List<Employees> employees = new ArrayList<>();
-
-    //@Column(name="responsible_branch", nullable = true)
-    //private Integer responsibleBranch;
 
     public void addEmployee(Employees emp) {
         employees.add(emp);

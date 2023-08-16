@@ -6,6 +6,7 @@ import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RiskAssessment;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -19,6 +20,31 @@ public class RiskInfo
     public RiskAssessment ra;
     public List<HazardFactors> hf = new ArrayList<>();
 
+    public static boolean findRisk(RiskAssessment risk)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            Query<RiskAssessment> ans = session.createQuery("Select ra from RiskAssessment ra where ra.date = :date and ra.nrOfDepartment = :number and ra.jobPosition = :job", RiskAssessment.class);
+            ans.setParameter("date", risk.getDate());
+            ans.setParameter("number", risk.getNrOfDepartment());
+            ans.setParameter("job", risk.getJobPosition());
+
+            RiskAssessment res = ans.uniqueResult();
+
+            if (res != null)
+            {
+                return true;
+            }
+
+            return false;
+
+        }finally{
+            session.close();
+        }
+    }
+
     public static List<RiskAssessment> checkAllRisks()
     {
         Session session = DBConnection.getSession();
@@ -26,7 +52,6 @@ public class RiskInfo
         try
         {
             List<RiskAssessment> list = session.createQuery("Select ra from RiskAssessment ra", RiskAssessment.class).getResultList();
-
             return list;
 
         }finally{
@@ -105,6 +130,9 @@ public class RiskInfo
 
     public static RiskAssessment addRisk(RiskAssessment risk)
     {
+        if (findRisk(risk))
+            throw new NonUniqueResultException(1);
+
         Session session = DBConnection.getSession();
 
         try
@@ -123,6 +151,9 @@ public class RiskInfo
 
     public static RiskAssessment addRisk(RiskAssessment risk, List<HazardFactors> hf)
     {
+        if (findRisk(risk))
+            throw new NonUniqueResultException(1);
+
         if (hf != null)
         {
             for (HazardFactors h: hf)

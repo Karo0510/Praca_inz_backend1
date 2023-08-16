@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -169,7 +170,7 @@ public class EmployeeController
 
         if (employee.isEmpty())
         {
-            return ResponseEntity.ok("Lista jest pusta");
+            return new ResponseEntity<String>("Lista jest pusta", HttpStatus.NOT_ACCEPTABLE);
         }
 
         for (int i = 0; i < employee.size(); i++)
