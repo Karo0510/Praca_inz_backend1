@@ -1,5 +1,6 @@
 package com.example.bhp.data_initializer;
 import com.example.bhp.auth.CustomAuthenticationEntryPoint;
+import com.example.bhp.auth.CustomLogoutSuccessHandler;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,24 @@ public class SecurityConfig {
     @Autowired
     CustomAuthenticationEntryPoint authenticationEntryPoint;
 
+    @Autowired
+    CustomLogoutSuccessHandler successHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeHttpRequests()
-                        .requestMatchers( "/api/save").permitAll()
+                        .requestMatchers( "/api/save", "/api/logout").permitAll()
                         .anyRequest().authenticated()
                 .and()
                 .httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .logout()// Konfiguracja wylogowywania
+                .logoutUrl("/api/logout")
+                .logoutSuccessHandler(successHandler)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
 
         return http.build();

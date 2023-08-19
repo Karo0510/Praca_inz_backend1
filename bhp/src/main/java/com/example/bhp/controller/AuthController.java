@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -40,7 +42,20 @@ public class AuthController {
     @PostMapping(value = "/home")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
     {
-        return ResponseEntity.ok(loginDTO.getEmail());
+
+        SecurityContext context = SecurityContextHolder.getContext();
+        System.out.println(context.getAuthentication());
+        return ResponseEntity.ok(context.getAuthentication().isAuthenticated());
     }
+
+    /*
+    @PostMapping(value = "/login", params = "logout")
+    public ResponseEntity<?> handleLogoutGet() {
+        // Obsługa wylogowania na /login?logout, może być przekierowanie lub komunikat
+        SecurityContext context = SecurityContextHolder.getContext();
+        return ResponseEntity.ok(context.getAuthentication());
+    }
+
+     */
 
 }
