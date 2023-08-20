@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 .and()
                 .httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
-                .logout()// Konfiguracja wylogowywania
+                .logout()
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(successHandler)
                 .invalidateHttpSession(true)

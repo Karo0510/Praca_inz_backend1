@@ -13,7 +13,17 @@ import java.io.IOException;
 public class CustomLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Override
-    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException
+    {
+        try
+        {
+            System.out.println(authentication.isAuthenticated());
+        }catch(Exception ex)
+        {
+            System.out.println("obsluzony wyjatek");
+        }
+
+
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write("Logged out successfully");
         response.getWriter().flush();

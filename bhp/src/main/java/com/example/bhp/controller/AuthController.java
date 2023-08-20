@@ -48,14 +48,22 @@ public class AuthController {
         return ResponseEntity.ok(context.getAuthentication().isAuthenticated());
     }
 
-    /*
-    @PostMapping(value = "/login", params = "logout")
-    public ResponseEntity<?> handleLogoutGet() {
-        // Obsługa wylogowania na /login?logout, może być przekierowanie lub komunikat
-        SecurityContext context = SecurityContextHolder.getContext();
-        return ResponseEntity.ok(context.getAuthentication());
-    }
 
-     */
+    @GetMapping(value = "/login")
+    public ResponseEntity<?> login() {
+
+        SecurityContext context = SecurityContextHolder.getContext();
+
+        boolean ans = context.getAuthentication().isAuthenticated();
+
+        System.out.println(ans);
+
+        if (ans == false)
+        {
+            return new ResponseEntity<String>("", HttpStatus.NOT_ACCEPTABLE);
+        }
+
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
 
 }

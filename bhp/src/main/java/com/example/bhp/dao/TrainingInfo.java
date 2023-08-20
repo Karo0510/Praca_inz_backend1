@@ -31,6 +31,22 @@ public class TrainingInfo
         }
     }
 
+    public static TrainingRegister training(Long id)
+    {
+        Session session = DBConnection.getSession();
+
+        try
+        {
+            Query<TrainingRegister> ans = session.createQuery("Select t from TrainingRegister t where t.training_id = :id", TrainingRegister.class);
+            ans.setParameter("id", id);
+
+            return ans.getSingleResult();
+
+        }finally{
+            session.close();
+        }
+    }
+
     public static TrainingRegister addTraining(TrainingRegister training)
     {
         Session session = DBConnection.getSession();

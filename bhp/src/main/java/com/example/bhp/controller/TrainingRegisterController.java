@@ -19,12 +19,22 @@ public class TrainingRegisterController {
     private TrainingRepository register;
 
     @GetMapping("/training_register")
-    public List<TrainingRegister> fetchTrainings()
+    public List<TrainingDetails> fetchTrainings()
     {
-        return TrainingInfo.trainings();
+        List<TrainingRegister> list =  TrainingInfo.trainings();
+
+        List<TrainingDetails> ans = new ArrayList<>();
+
+        for (int i = 0; i<list.size(); i++)
+        {
+            TrainingDetails details = new TrainingDetails();
+            ans.add(details.setData(list.get(i)));
+        }
+
+        return ans;
     }
 
-    @GetMapping("/training_register/$id={id}")
+    /*@GetMapping("/training_register/$id={id}")
     public List<TrainingDetails> fetchTrainingsDetail()
     {
         List<TrainingDetails> details = new ArrayList<>();
@@ -37,6 +47,19 @@ public class TrainingRegisterController {
         }
 
         return details;
+    }*/
+
+    @GetMapping("/training_register/$id={id}")
+    public TrainingDetails fetchTrainingsDetail(@PathVariable(value="id") Long number)
+    {
+        TrainingRegister ans = TrainingInfo.training(number);
+
+        System.out.println(ans);
+
+        TrainingDetails detail = new TrainingDetails();
+        detail.setData(ans);
+
+        return detail;
     }
 
 

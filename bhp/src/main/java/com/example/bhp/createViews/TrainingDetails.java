@@ -18,19 +18,21 @@ import java.util.List;
 @AllArgsConstructor
 public class TrainingDetails
 {
+    public Long id;
     public LocalDate firstTrainingDate;
     public LocalDate examTrainingDate;
-    List<String> employees = new ArrayList<>();
+    public List<Long> IdEmployees = new ArrayList<>();
 
     public TrainingDetails setData(TrainingRegister reg)
     {
+        this.id = reg.getTraining_id();
         this.firstTrainingDate = reg.getFirst_date();
         this.examTrainingDate = reg.getDate_exam();
 
         for (Employees e: reg.getEmployees())
         {
-            String data = e.getLastName() + " " + e.getFirstName();
-            employees.add(data);
+            Long data = e.getId();
+            IdEmployees.add(data);
         }
 
         return this;

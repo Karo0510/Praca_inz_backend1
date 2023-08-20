@@ -58,6 +58,8 @@ public class RiskController {
     public ResponseEntity addRisk(@RequestBody JobDetails job)
     {
 
+        System.out.println("JESTEM W KONTROLERZE");
+
         //XXX: poprawić walidacje funkcji findRisk!!!!
         System.out.println(job.getJobName());
 
@@ -96,5 +98,4 @@ public class RiskController {
 
         return ResponseEntity.ok("ok");
     }
-
 }
