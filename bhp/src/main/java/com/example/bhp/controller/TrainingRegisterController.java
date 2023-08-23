@@ -85,10 +85,9 @@ public class TrainingRegisterController {
             TrainingRegister ans = TrainingRegister.builder()
                     .first_date(reg.get(i).getFirstTrainingDate())
                     .date_exam(reg.get(i).examTrainingDate)
-                    .employees(emp)
                     .build();
 
-            TrainingRegister saved = TrainingInfo.addTraining(ans, emp);
+            TrainingRegister saved = TrainingInfo.addTraining(reg.get(i), emp);
 
             if (saved == null) {
                 Integer l = i + 1;

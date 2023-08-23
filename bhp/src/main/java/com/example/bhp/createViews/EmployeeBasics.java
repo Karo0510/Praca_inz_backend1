@@ -51,10 +51,9 @@ public class EmployeeBasics
         {
             return null;
         }
-        else
-        {
-            employee.setJobPosition(job);
-        }
+
+        employee.setJobPosition(job);
+
 
         Employees savedEmp = EmployeeInfo.addEmployee(employee);
 

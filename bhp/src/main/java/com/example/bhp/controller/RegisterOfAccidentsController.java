@@ -127,7 +127,6 @@ public class RegisterOfAccidentsController {
             {
                 RegistryOfAccidents saved = register.saveAndFlush(acc);
 
-
             }catch(Exception ex)
             {
                 text += "Kontrola nr "+accident.get(i).getProtocole()+" w dziale "+accident.get(i).getDepartment()+" nie moze zostac zapisana\n";

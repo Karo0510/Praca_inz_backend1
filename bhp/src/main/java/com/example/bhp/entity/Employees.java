@@ -91,8 +91,8 @@ public class Employees implements Serializable{
     @JsonBackReference(value = "job_position_employees_reference")
     private JobPosition jobPosition;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
-    private Users user;
+    //@OneToOne(fetch = FetchType.LAZY, optional = true)
+    //private Users user;
 
     @Override
     public boolean equals(Object o) {

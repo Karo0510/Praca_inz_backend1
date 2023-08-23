@@ -169,7 +169,8 @@ public class EmployeeInfo
     public static Employees addEmployee(Employees employee)
     {
         //XXX: zmienic na tworzenie wlasnych wyjatkow
-        if (validation(employee) == true)
+
+        if (validation(employee))
         {
             return null;
         }
@@ -180,6 +181,21 @@ public class EmployeeInfo
         session.persist(employee);
         session.flush();
         session.getTransaction().commit();
+        session.close();
+
+        return employee;
+    }
+
+    public static Employees updateEmployee(Employees employee)
+    {
+
+        Session session = DBConnection.getSession();
+
+        session.getTransaction().begin();
+        session.merge(employee);
+        session.flush();
+        session.getTransaction().commit();
+        session.close();
 
         return employee;
     }

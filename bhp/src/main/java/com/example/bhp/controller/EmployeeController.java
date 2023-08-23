@@ -168,20 +168,37 @@ public class EmployeeController
     {
         int count = 0;
 
+        String text = "";
+
         if (employee.isEmpty())
         {
             return new ResponseEntity<String>("Lista jest pusta", HttpStatus.NOT_ACCEPTABLE);
         }
 
+
         for (int i = 0; i < employee.size(); i++)
         {
+            Integer l = i + 1;
+
+            JobPosition job = JobInfo.getJobByName(employee.get(i).getJobPosition());
+
+            if (job == null)
+            {
+                text += l.toString() + ") Nie ma takiego stanowiska pracy - najpierw dodaj stanowisko pracy "+employee.get(i).getJobPosition()+"\n";
+                continue;
+            }
+
             Employees savedEmp = EmployeeBasics.getEmployee(employee.get(i));
 
             if (savedEmp != null)
-                count++;
-        }
+                text += l.toString() + ") Zapisano uzytkownika  " + employee.get(i).lastName+"\n";
+            else
+            {
+                text += l.toString() + ") Nie mozna zapisac pracownika  " + employee.get(i).lastName+"\n";
+            }
 
-        return ResponseEntity.ok("Zapisano "+count+" z "+employee.size());
+        }
+        return ResponseEntity.ok(text);
     }
 
 }

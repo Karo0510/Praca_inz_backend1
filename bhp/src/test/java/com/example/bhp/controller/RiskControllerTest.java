@@ -33,7 +33,7 @@ class RiskControllerTest {
     @Test
     void addRiskTest()
     {
-        /*JobPosition newJob = JobPosition.builder()
+        JobPosition newJob = JobPosition.builder()
                 .name("Kurier")
                 .isBiologicalRisk(true)
                 .isChemicalRisk(true)
@@ -42,7 +42,7 @@ class RiskControllerTest {
                 .build();
 
 
-        JobPosition pos = JobInfo.addJobPosition(newJob);*/
+        JobPosition pos = JobInfo.addJobPosition(newJob);
 
         HazardFactors h5 = HazardFactors.builder()
                 .hazard("proba 1")

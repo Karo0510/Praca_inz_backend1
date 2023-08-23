@@ -26,10 +26,10 @@ public class RiskInfo
 
         try
         {
-            //Query<RiskAssessment> ans = session.createQuery("Select ra from RiskAssessment ra where ra.date = :date and ra.nrOfDepartment = :number and ra.jobPosition = :job", RiskAssessment.class);
             Query<RiskAssessment> ans = session.createQuery("Select ra from RiskAssessment ra where ra.date = :date and ra.nrOfDepartment = :number and ra.jobPosition = :job", RiskAssessment.class);
+            //Query<RiskAssessment> ans = session.createQuery("Select ra from RiskAssessment ra where ra.date = :date and ra.nrOfDepartment = :number and ra.jobPosition = :job", RiskAssessment.class);
             ans.setParameter("date", risk.getDate());
-            //ans.setParameter("number", risk.getNrOfDepartment());
+            ans.setParameter("number", risk.getNrOfDepartment());
             ans.setParameter("job", risk.getJobPosition());
 
             RiskAssessment res = ans.uniqueResult();

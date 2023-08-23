@@ -32,8 +32,8 @@ public class Users
     private String password;
     private String role;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true)
-    private Employees employee;
+    //@OneToOne(fetch = FetchType.LAZY, optional = true)
+    //private Employees employee;
 
     public Users(Long id, String username, String email, String encode)
     {

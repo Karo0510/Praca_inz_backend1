@@ -93,6 +93,7 @@ public class RiskController {
         }
         catch(Exception ex)
         {
+            System.out.println(ex.getMessage());
             return new ResponseEntity<String>("Problem z zapisem", HttpStatus.NOT_ACCEPTABLE);
         }
 
