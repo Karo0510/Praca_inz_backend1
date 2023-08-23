@@ -1,0 +1,17 @@
+@startuml 
+class com.example.bhp.entity.RegistryKey{
+- long serialVersionUID
+- java.lang.Long accidentId
+- java.lang.Integer responsibleBranch
++ java.lang.String toString ()
++ void RegistryKey (Long accidentId, Integer )
++ void RegistryKey ()
++ java.lang.Long getAccidentId ()
++ java.lang.Integer getResponsibleBranch ()
++ void setAccidentId (Long )
++ void setResponsibleBranch (Integer )
+}
+interface java.io.Serializable {
+}
+java.io.Serializable <|.. com.example.bhp.entity.RegistryKey
+@enduml 
