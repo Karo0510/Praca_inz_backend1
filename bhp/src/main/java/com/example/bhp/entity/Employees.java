@@ -42,7 +42,7 @@ public class Employees implements Serializable{
 
     //XXX: dodac do klasy pesel, data konca pracy, oraz data wpisu
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @Builder.Default
     @JsonBackReference(value = "periodic_trainings_employee_reference")
     @JoinTable(name = "employees_periodic_trainings",
@@ -51,7 +51,7 @@ public class Employees implements Serializable{
     )
     private List<TrainingRegister> periodic_training_register = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @Builder.Default
     @JsonBackReference(value = "employees_accidents_employees_reference")
     @JoinTable(name = "employees_accident",
@@ -80,7 +80,7 @@ public class Employees implements Serializable{
     @Column(name="first_work_day", nullable = false)
     private LocalDate date;
 
-    @Column(name="last_day_of_introductory_training", nullable = true) //XXX: ostatni dzien szkolenia wstepnego zmienic na false
+    @Column(name="last_day_of_introductory_training", nullable = true)
     private LocalDate lastTrainingDate = LocalDate.of(2022, 01, 01);
 
     @Column(name="nr_of_department", nullable = true)
@@ -90,6 +90,9 @@ public class Employees implements Serializable{
     @JoinColumn(name = "job_id")
     @JsonBackReference(value = "job_position_employees_reference")
     private JobPosition jobPosition;
+
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    private Users user;
 
     @Override
     public boolean equals(Object o) {

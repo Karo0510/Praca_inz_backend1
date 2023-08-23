@@ -76,7 +76,7 @@ class RiskControllerTest {
 
         job.setJobName("Kurier");
         job.setLastRisk(LocalDate.of(2035, 9, 9));
-        job.setNrOfDepartment(9);
+        //job.setNrOfDepartment(9);
         job.setFactors(list);
 
         RiskController risk = new RiskController();

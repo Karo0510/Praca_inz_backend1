@@ -1,13 +1,17 @@
 package com.example.bhp.data_initializer;
+import com.example.bhp.auth.CustomAccessDeniedHandler;
 import com.example.bhp.auth.CustomAuthenticationEntryPoint;
 import com.example.bhp.auth.CustomLogoutSuccessHandler;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -38,22 +42,27 @@ public class SecurityConfig {
     @Autowired
     CustomLogoutSuccessHandler successHandler;
 
+    @Autowired
+    CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().and()
                 .authorizeHttpRequests()
-                        .requestMatchers( "/api/save", "/api/logout").permitAll()
+                        .requestMatchers( "/api/logout").permitAll()
+                        .requestMatchers("/api/save").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 .and()
                 .httpBasic().authenticationEntryPoint(authenticationEntryPoint).and()
+                .exceptionHandling()
+                .accessDeniedHandler(customAccessDeniedHandler)
+                .and()
                 .logout()
                 .logoutUrl("/api/logout")
                 .logoutSuccessHandler(successHandler)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-
 
         return http.build();
     }

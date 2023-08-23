@@ -17,6 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"}),
         @UniqueConstraint(columnNames = {"email"})
@@ -31,6 +32,9 @@ public class Users
     private String password;
     private String role;
 
+    @OneToOne(fetch = FetchType.LAZY, optional = true)
+    private Employees employee;
+
     public Users(Long id, String username, String email, String encode)
     {
         this.id = id;
@@ -39,4 +43,6 @@ public class Users
         this.password = encode;
         this.role = "ROLE_ADMIN";
     }
+
+
 }

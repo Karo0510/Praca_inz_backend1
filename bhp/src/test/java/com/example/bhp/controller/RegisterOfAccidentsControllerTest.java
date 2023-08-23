@@ -61,7 +61,7 @@ class RegisterOfAccidentsControllerTest {
         acc.setPlace("bla bla");
 
         acc.setAccident(true);
-        //acc.setAccident_priority("LIGHT");
+        acc.setAccident_priority(RegistryOfAccidents.Accident_priority.LIGHT);
         acc.setIdEmployees(id);
 
         ArrayList<AccidentDetails> list = new ArrayList<>();

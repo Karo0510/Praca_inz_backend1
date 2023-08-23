@@ -29,7 +29,6 @@ public class EmployeeInfo
 
     private static List<Employees> getAllEmployees()
     {
-
         Session session = DBConnection.getSession();
 
         try
@@ -184,6 +183,7 @@ public class EmployeeInfo
 
         return employee;
     }
+
 }
 
 

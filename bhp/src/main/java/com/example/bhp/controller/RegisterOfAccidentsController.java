@@ -6,6 +6,7 @@ import com.example.bhp.createViews.AccidentBasics;
 import com.example.bhp.createViews.AccidentDetails;
 import com.example.bhp.entity.RegistryOfAccidents;
 import com.example.bhp.repository.RegisterOfAccidentsRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,7 +79,7 @@ public class RegisterOfAccidentsController {
    // }
 
 
-    @PostMapping("/register_of_accidents")
+    /*@PostMapping("/register_of_accidents")
     public ResponseEntity<String> addAccident(@RequestBody ArrayList<AccidentDetails> accident)
     {
         if (accident.size() == 0)
@@ -96,11 +97,11 @@ public class RegisterOfAccidentsController {
         }
 
         return new ResponseEntity<String>("Ok", HttpStatus.OK);
-    }
+    }*/
 
 
-    /*@PostMapping("/register_of_accidents")
-    public ResponseEntity<String> addAccident(List<AccidentDetails> accident) {
+    @PostMapping("/register_of_accidents")
+    public ResponseEntity<String> addAccident(@RequestBody ArrayList<AccidentDetails> accident) {
         System.out.println("nodkfckvd");
         String text = "";
         int count = 0;
@@ -120,18 +121,21 @@ public class RegisterOfAccidentsController {
                 continue;
             }
 
-            try {
-                RegistryOfAccidents acc = accident.get(i).createAccident();
+            RegistryOfAccidents acc = accident.get(i).createAccident();
+
+            try
+            {
                 RegistryOfAccidents saved = register.saveAndFlush(acc);
+
+
             }catch(Exception ex)
             {
                 text += "Kontrola nr "+accident.get(i).getProtocole()+" w dziale "+accident.get(i).getDepartment()+" nie moze zostac zapisana\n";
-                continue;
             }
 
             text += "Kontrola nr "+accident.get(i).getProtocole()+"w dziale "+accident.get(i).getDepartment()+" zostala zapisana\n";
 
         }
         return new ResponseEntity<String>(text, HttpStatus.CREATED);
-    }*/
+    }
 }

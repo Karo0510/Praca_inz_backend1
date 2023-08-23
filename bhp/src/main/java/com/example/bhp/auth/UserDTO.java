@@ -26,7 +26,7 @@ public class UserDTO implements UserDetails
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String username, String email, String password, String role) {
+    public UserDTO(String username, String email, String password, String role) {
         this.id = id;
         this.username = username;
         this.email = email;

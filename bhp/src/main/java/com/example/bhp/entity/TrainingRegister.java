@@ -40,7 +40,7 @@ public class TrainingRegister implements Serializable {
     private LocalDate date_exam;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "periodic_training_register", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "periodic_training_register", fetch = FetchType.EAGER,  cascade = CascadeType.ALL)
     private List<Employees> employees = new ArrayList<>();
 
 }

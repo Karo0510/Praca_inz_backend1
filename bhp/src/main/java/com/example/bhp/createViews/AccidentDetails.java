@@ -6,9 +6,11 @@ import com.example.bhp.entity.Employees;
 import com.example.bhp.entity.JobPosition;
 import com.example.bhp.entity.RegistryKey;
 import com.example.bhp.entity.RegistryOfAccidents;
+import com.example.bhp.repository.EmployeeRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ import java.util.List;
 @Getter
 @Setter
 public class AccidentDetails extends AccidentBasics {
+
     public List<Long> IdEmployees = new ArrayList<>();
 
     public AccidentDetails() {
@@ -46,8 +49,6 @@ public class AccidentDetails extends AccidentBasics {
         year = Long.parseLong(entry[1]);
         number = Integer.parseInt(entry[0]);
 
-
-
         Long accidentId = Long.parseLong(number.toString() + year.toString());
 
         RegistryOfAccidents accident = RegistryOfAccidents.builder()
@@ -57,6 +58,7 @@ public class AccidentDetails extends AccidentBasics {
                 .key(new RegistryKey(accidentId, this.getDepartment()))
                 .date(this.getDate())
                 .isAccident(this.isAccident())
+                .place(this.getPlace())
                 .build();
 
         List<Employees> list = new ArrayList<>();
@@ -66,6 +68,8 @@ public class AccidentDetails extends AccidentBasics {
             Employees emp = EmployeeInfo.findEmployeeById((long) this.IdEmployees.get(j));
             emp.getRegister_of_accidents().add(accident);
             list.add(emp);
+
+            EmployeeInfo.addEmployee(emp);
         }
 
         accident.setEmployees(list);

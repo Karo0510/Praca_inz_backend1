@@ -22,10 +22,18 @@ public class UserServicesImpl implements UserServices
     @Override
     public String addUser(UserDTO userDTO)
     {
-        Users user = new Users(userDTO.getId(), userDTO.getUsername(), userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()));
-        usersRepository.save(user);
+        //Users user = new Users(userDTO.getId(), userDTO.getUsername(), userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()));
 
-        return user.getUsername();
+        Users user = Users.builder()
+                .username(userDTO.getUsername())
+                .password(passwordEncoder.encode(userDTO.getPassword()))
+                .email(userDTO.getEmail())
+                .role(userDTO.getRole())
+                .build();
+
+        Users saved = usersRepository.save(user);
+
+        return saved.getUsername();
     }
 
     public Users findUser(String email)

@@ -60,7 +60,7 @@ public class RegistryOfAccidents implements Serializable {
     private boolean isAccident = false;
 
     @Builder.Default
-    @ManyToMany(mappedBy = "register_of_accidents")
+    @ManyToMany(mappedBy = "register_of_accidents",  cascade = CascadeType.ALL)
     private List<Employees> employees = new ArrayList<>();
 
     public void addEmployee(Employees emp) {

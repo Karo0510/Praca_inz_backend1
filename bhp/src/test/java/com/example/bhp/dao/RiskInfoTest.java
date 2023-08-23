@@ -59,7 +59,7 @@ class RiskInfoTest
         hf.add(h3);
 
         RiskAssessment risk = RiskAssessment.builder()
-                .nrOfDepartment(4)
+                //.nrOfDepartment(4)
                 .date(LocalDate.of(2023, 01, 01))
                 .jobPosition(pos.get(2))
                 .build();
@@ -77,7 +77,7 @@ class RiskInfoTest
         List<JobPosition> pos = JobInfo.getAllPositions();
 
         RiskAssessment risk = RiskAssessment.builder()
-                .nrOfDepartment(9)
+                //.nrOfDepartment(9)
                 .date(LocalDate.of(2023, 01, 01))
                 .jobPosition(pos.get(1))
                 .build();

@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.ArrayList;
+
 @RestController
 @EntityScan(basePackages = {"com.example"})
 @RequestMapping("/api")
@@ -33,16 +35,25 @@ public class AuthController {
 
 
     @PostMapping(value = "/save")
-    public String saveUser(@RequestBody UserDTO userDTO) {
-        String id = userServices.addUser(userDTO);
-        return id;
+    public ResponseEntity<String> saveUser(@RequestBody ArrayList<UserDTO> userDTO) {
+
+        for (int i = 0; i < userDTO.size(); i++)
+        {
+            String username = userServices.addUser(userDTO.get(i));
+
+            if (username == null)
+            {
+                return new ResponseEntity<String>("Nie dodano nowego uzytkownika", HttpStatus.NOT_ACCEPTABLE);
+            }
+        }
+
+        return new ResponseEntity<String>("Dodano nowych uzytkownikow", HttpStatus.OK);
     }
 
 
     @PostMapping(value = "/home")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO)
     {
-
         SecurityContext context = SecurityContextHolder.getContext();
         System.out.println(context.getAuthentication());
         return ResponseEntity.ok(context.getAuthentication().isAuthenticated());
